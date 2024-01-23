@@ -10,14 +10,17 @@
 	<h1>タイトル検索画面</h1>
 	<form 　action="/checker/charaSerblet">
 		<p>
-			何のタイトルについて調べる？<br> <input type="text" name="title"
-				placeholder="ゲームのタイトル名"> <input type="submit" value="検索">
+			何のタイトルについて調べる？<br>
+			<input type="text" name="title" placeholder="ゲームのタイトル名">
+			<input type="submit" value="検索">
 		</p>
 	</form>
 	<form onsubmit="return check()">
 		<p>
-			タイトルが見つからない場合<br> 新規登録タイトル登録<br> <input type="text"
-				placeholder="追加タイトル名"> <input type="submit" value="登録">
+			タイトルが見つからない場合<br> 新規登録タイトル登録<br>
+			<input type="text" name="addTitle" placeholder="追加タイトル名">
+			<input text="text"  name="addChara" placeholder="追加キャラクター名">
+			<input type="submit" value="登録">
 		</p>
 	</form>
 
@@ -31,10 +34,6 @@
 			}
 		}
 	</script>
-
-
-
-
 
 </body>
 </html>
