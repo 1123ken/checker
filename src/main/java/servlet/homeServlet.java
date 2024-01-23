@@ -27,8 +27,11 @@ public class homeServlet extends HttpServlet {
                 TitleDAO titleDAO = new TitleDAO();
                 List<Title> titles = titleDAO.searchTitles(selectedTitle);
 
-                // データをrequestスコープにセット
+                // タイトル情報をrequestスコープにセット
                 request.setAttribute("titles", titles);
+
+                // 選択されたタイトルをrequestスコープにセット
+                request.setAttribute("selectedTitle", selectedTitle);
 
                 // home.jspへフォワード
                 RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/home.jsp");

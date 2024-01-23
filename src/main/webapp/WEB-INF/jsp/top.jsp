@@ -17,7 +17,7 @@
 	<form id="searchForm" method="get">
 		<p>
 			何のタイトルについて調べる？<br>
-			<input type="text" name="title" placeholder="ゲームのタイトル名">
+			<input type="text" name="title" placeholder="部分検索可">
 			<input type="button" value="検索" onclick="submitForm()">
 		</p>
 	</form>
