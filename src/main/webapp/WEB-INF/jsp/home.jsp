@@ -10,13 +10,13 @@
 String selectedTitle = request.getParameter("selectedTitle");
 
 if (selectedTitle != null && !selectedTitle.isEmpty()) {
-	
+
 	//TitleDAOのインスタンスを生成
 	TitleDAO titleDAO = new TitleDAO();
-	
+
 	// タイトル名から title_id を取得
-	int titleId = titleDAO.getTitleId(selectedTitle); 
-	
+	int titleId = titleDAO.getTitleId(selectedTitle);
+
 	//titleDAOインスタンスの引数の値をcharactersに代入
 	List<String> characters = titleDAO.getCharacters(titleId);
 	request.setAttribute("characters", characters);
@@ -32,40 +32,38 @@ if (selectedTitle != null && !selectedTitle.isEmpty()) {
 <body>
 	<h1>${selectedTitle}のページ</h1>
 	<br>
-	<p>
-    自操作キャラ<br>
-    <select name="selfCharacter"> 
-        <c:forEach var="character" items="${selfCharacters}">
-            <option value="${character.id}">${character.name}</option>
-        </c:forEach>
-    </select><br>
+	<form action="SaveDataServlet" method="post">
+		<!-- キャラクターの選択 -->
+		<label for="myCharacter">自操作キャラ:</label> <select name="myCharacter">
+			<c:forEach var="character" items="${myCharacters}">
+				<option value="${character.id}">${character.name}</option>
+			</c:forEach>
+		</select> <label for="yourCharacter">対策キャラ:</label> <select
+			name="yourCharacter">
+			<c:forEach var="character" items="${yourCharacters}">
+				<option value="${character.id}">${character.name}</option>
+			</c:forEach>
+		</select>
 
-    対策キャラ<br>
-    <select name="counterCharacter">
-        <c:forEach var="character" items="${counterCharacters}">
-            <option value="${character.id}">${character.name}</option>
-        </c:forEach>
-    </select>
-</p>
-	
-	<!-- javascriptの＋－ボタンで入力ボックスを増やす -->
-	<div id="input_pluralBox">
-		<div id="input_plural">
-			<form action="/registerDataServlet" method="post">
-				勝<input type="radio" name="worl" value="1">
-				負<input type="radio" name="worl" value="0"><br>
-				キツイ所<br>
-				<input type="text" name="point" class="form-control" placeholder="この技がきつい等"><br>
-				対策<br>
-				<textarea name="cpoint" class="form-control" placeholder="全体的な対策" cols="30" rows="10"></textarea><br>
-				<input type="button" value="＋" class="add pluralBtn">
-				<input type="button" value="－" class="del pluralBtn">
-				<input type="submit" value="登録">
-			</form>
+		<!-- javascriptの＋－ボタンで入力ボックスを増やす -->
+		<div id="input_pluralBox">
+			<div id="input_plural">
+				<form action="/registerDataServlet" method="post">
+					勝<input type="radio" name="worl" value="1">
+					負<input type="radio" name="worl" value="0"><br>
+					キツイ所<br>
+					<input type="text" name="point" class="form-control" placeholder="この技がきつい等"><br>
+					対策<br>
+					<textarea name="cpoint" class="form-control" placeholder="全体的な対策" cols="30" rows="10"></textarea><br>
+					<input type="button" value="＋" class="add pluralBtn">
+					<input type="button" value="－" class="del pluralBtn">
+					<input type="submit" value="登録">
+				</form>
+			</div>
 		</div>
-	</div>
-	<!-- ここまで -->
-	
+		<!-- ここまで -->
+	</form>
+
 	<form action="/topServlet">
 		<input type="submit" value="TOPへ">
 	</form>
