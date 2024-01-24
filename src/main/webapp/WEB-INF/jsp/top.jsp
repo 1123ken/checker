@@ -21,40 +21,41 @@
 			<input type="button" value="検索" onclick="submitForm()">
 		</p>
 	</form>
+	
+<!-- 検索結果を表示して表示したページに画面遷移する -->
+<%
+String keyword = request.getParameter("title");
 
-	<%
-	String keyword = request.getParameter("title");
+// キーワードが指定されている場合にのみ検索実行
+if (keyword != null && !keyword.isEmpty()) {
+	try {
+		TitleDAO titleDAO = new TitleDAO();
+		List<Title> titles = titleDAO.searchTitles(keyword);
 
-	// キーワードが指定されている場合にのみ検索実行
-	if (keyword != null && !keyword.isEmpty()) {
-		try {
-			TitleDAO titleDAO = new TitleDAO();
-			List<Title> titles = titleDAO.searchTitles(keyword);
-
-			if (!titles.isEmpty()) {
-	%>
+		if (!titles.isEmpty()) { %>
 	<h2>検索結果</h2>
 	<ul>
 		<%
 		for (Title title : titles) {
 		%>
-		<li><a href="/homeServlet?selectedTitle=<%=title.getTitle()%>"><%=title.getTitle()%></a></li>
+		<li>
+		<a href="<%=request.getContextPath()%>/homeServlet?selectedTitle=<%=title.getTitle()%>"><%=title.getTitle()%></a>
 		<%
 		}
 		%>
 	</ul>
 	<%
-	} else {
-	%>
+} else {
+%>
 	<p>登録がありません</p>
 	<%
-	}
-	} catch (SQLException e) {
-	e.printStackTrace();
-	}
-	}
-	%>
-
+}
+} catch (SQLException e) {
+e.printStackTrace();
+}
+}
+%>
+<!-- タイトル、キャラクター登録 -->
 	<form onsubmit="return check()" id="registerForm">
 		<p>
 			タイトルが見つからない場合<br>
@@ -65,17 +66,18 @@
 			<input type="button" value="登録" onclick="register()">
 		</p>
 	</form>
+
+
+	<!--ajaxを適用 -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	
-	
-	<!-- DBからタイトル情報を検索するJavascript -->
-	<script
-		src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<!-- タイトル検索をするJavascript -->
 	<script type="text/javascript">
 		function submitForm() {
 			document.getElementById("searchForm").submit();
 		}
 	</script>
-	
+
 	<!-- DBにタイトルとキャラクターを登録するjavascript -->
 	<script type="text/javascript">
 		function register() {
@@ -91,7 +93,7 @@
 				},
 				success : function(response) {
 					// 登録成功・失敗メッセージを表示
-					alert(response);
+					alert("登録しました。");
 				},
 				error : function() {
 					alert("登録に失敗しました。");

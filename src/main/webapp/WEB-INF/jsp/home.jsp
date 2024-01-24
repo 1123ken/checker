@@ -2,50 +2,70 @@
 	pageEncoding="UTF-8"%>
 <%@ page import="java.util.List"%>
 <%@ page import="model.Title"%>
-<%@ page import="java.util.List" %>
-<%@ page import="model.Character" %>
-<%@ page import="dao.TitleDAO" %>
+<%@ page import="java.util.List"%>
+<%@ page import="dao.TitleDAO"%>
+
 <%
-    // 選択されたタイトルを取得
-    String selectedTitle = (String) request.getAttribute("selectedTitle");
+//top.jspで選択したタイトル名を取得
+String selectedTitle = request.getParameter("selectedTitle");
 
-    // タイトルDAOをインスタンス化
-    TitleDAO titleDAO = new TitleDAO();
-
-    // 登録されているキャラクター情報を取得
-    List<Character> characters = titleDAO.getCharacters(selectedTitle);
-    request.setAttribute("characters", characters);
+if (selectedTitle != null && !selectedTitle.isEmpty()) {
+	
+	//TitleDAOのインスタンスを生成
+	TitleDAO titleDAO = new TitleDAO();
+	
+	// タイトル名から title_id を取得
+	int titleId = titleDAO.getTitleId(selectedTitle); 
+	
+	//titleDAOインスタンスの引数の値をcharactersに代入
+	List<String> characters = titleDAO.getCharacters(titleId);
+	request.setAttribute("characters", characters);
+}
 %>
+
+
 <html>
 <head>
 <meta charset="UTF-8">
 <title>登録画面</title>
 </head>
 <body>
-	<h1>${selectedTitle}のページ</h1><br>
+	<h1>${selectedTitle}のページ</h1>
+	<br>
 	<p>
+    自操作キャラ<br>
+    <select name="selfCharacter"> 
+        <c:forEach var="character" items="${selfCharacters}">
+            <option value="${character.id}">${character.name}</option>
+        </c:forEach>
+    </select><br>
 
-		<input type="text" name="title"><br> 自操作キャラ<br> <input
-			type="text" name="myChara"><br> 対策キャラ<br> <input
-			type="text" name="yourChara"><br>
-	</p>
-
+    対策キャラ<br>
+    <select name="counterCharacter">
+        <c:forEach var="character" items="${counterCharacters}">
+            <option value="${character.id}">${character.name}</option>
+        </c:forEach>
+    </select>
+</p>
+	
 	<!-- javascriptの＋－ボタンで入力ボックスを増やす -->
 	<div id="input_pluralBox">
 		<div id="input_plural">
 			<form action="/registerDataServlet" method="post">
-				勝<input type="radio" name="worl"> 負<input type="radio" name="worl"><br>
-				キツイ所<br> <input type="text" name="point" class="form-control" placeholder="この技がきつい等"><br>
+				勝<input type="radio" name="worl" value="1">
+				負<input type="radio" name="worl" value="0"><br>
+				キツイ所<br>
+				<input type="text" name="point" class="form-control" placeholder="この技がきつい等"><br>
 				対策<br>
-				<textarea name="cpoint" class="form-control" placeholder="全体的な対策"></textarea><br>
-				 <input type="button" value="＋" class="add pluralBtn">
+				<textarea name="cpoint" class="form-control" placeholder="全体的な対策" cols="30" rows="10"></textarea><br>
+				<input type="button" value="＋" class="add pluralBtn">
 				<input type="button" value="－" class="del pluralBtn">
 				<input type="submit" value="登録">
 			</form>
 		</div>
 	</div>
 	<!-- ここまで -->
-
+	
 	<form action="/topServlet">
 		<input type="submit" value="TOPへ">
 	</form>

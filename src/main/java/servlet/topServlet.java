@@ -1,3 +1,6 @@
+//TOPページに画面遷移するためのサーブレット
+//WEB-INF内にあるのでここからしか画面遷移できない
+
 package servlet;
 
 import java.io.IOException;
