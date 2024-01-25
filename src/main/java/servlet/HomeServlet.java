@@ -57,11 +57,11 @@ public class HomeServlet extends HttpServlet {
                 // キャラクターリストをsessionスコープにセット
                 session.setAttribute("登録キャラクターリスト", characters);
                 
-                //情報が取得できているか確認
-                System.out.println(titles);	//キー　ID　値　タイトル
-                System.out.println(titleId);	//キー
-                System.out.println(selectedTitle);	//値
-                System.out.println(characters);	//キャラリスト
+//                //情報が取得できているか確認
+//                System.out.println(titles);	//キー　ID　値　タイトル
+//                System.out.println(titleId);	//キー
+//                System.out.println(selectedTitle);	//値
+//                System.out.println(characters);	//キャラリスト
                 
                 //gcに各項目の値を渡す
                 gc.setSelectedTitle(selectedTitle);
