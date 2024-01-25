@@ -26,10 +26,7 @@ public class CharacterServlet extends HttpServlet {
         // 特定のタイトルに紐づくキャラクターのリストを取得
         List<GameCharacter> characters = characterDAO.getAllCharactersForTitle(titleId);
 
-        // キャラクターリストをリクエスト属性にセット
-        request.setAttribute("characters", characters);
-
-        // 画面遷移せずにJSON形式でレスポンスを返す
+        // キャラクターリストをJSON形式でレスポンスとして返す
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
         response.getWriter().write(new Gson().toJson(characters));

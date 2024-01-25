@@ -3,18 +3,13 @@
 <%@ page import="java.util.List"%>
 <%@ page import="model.Title"%>
 <%@ page import="dao.TitleDAO"%>
-<%@ page import="beans.Character"%>
-
+<%@ page import="beans.GameCharacter"%>
+<%@ page import="dao.CharacterDAO"%>
 <%
-String selectedTitle = request.getParameter("selectedTitle");
-
-if (selectedTitle != null && !selectedTitle.isEmpty()) {
-	TitleDAO titleDAO = new TitleDAO();
-	int titleId = titleDAO.getTitleId(selectedTitle);
-
-	List<GameCharacter> characters = titleDAO.getCharactersWithIds(titleId);
-	request.setAttribute("characters", characters);
-}
+GameCharacter gc = (GameCharacter) session.getAttribute("キャラクター情報");
+String selectedTitle = (String) session.getAttribute("選択したタイトル名");
+List<Title> titles = (List<Title>) session.getAttribute("タイトル名");
+List<String> characters = (List<String>) session.getAttribute("登録キャラクターリスト");
 %>
 
 <html>
@@ -23,56 +18,58 @@ if (selectedTitle != null && !selectedTitle.isEmpty()) {
 <title>登録画面</title>
 </head>
 <body>
-	<h1>${selectedTitle}のページ</h1>
+	<h1><%=gc.getSelectedTitle()%>のページ</h1>
 	<br>
-	<form action="SaveDataServlet" method="post">
-		<label for="myCharacter">自操作キャラ:</label>
-		<select name="myCharacter">
-			<c:forEach var="character" items="${characters}">
-				<option value="${character.id}">${character.name}</option>
-			</c:forEach>
-		</select>
-		<label for="yourCharacter">対策キャラ:</label>
-		<select name="yourCharacter">
-			<c:forEach var="character" items="${characters}">
-				<option value="${character.id}">${character.name}</option>
-			</c:forEach>
-
-			<!-- javascriptの＋－ボタンで入力ボックスを増やす -->
-			<div id="input_pluralBox">
-				<div id="input_plural">
-					<form action="/registerDataServlet" method="post">
-						勝<input type="radio" name="worl" value="1"> 負<input
-							type="radio" name="worl" value="0"><br> キツイ所<br>
-						<input type="text" name="point" class="form-control"
-							placeholder="この技がきつい等"><br> 対策<br>
-						<textarea name="cpoint" class="form-control" placeholder="全体的な対策"
-							cols="30" rows="10"></textarea>
-						<br> <input type="button" value="＋" class="add pluralBtn">
-						<input type="button" value="－" class="del pluralBtn"> <input
-							type="submit" value="登録">
-					</form>
-				</div>
-			</div>
-			<!-- ここまで -->
+    <!-- 自操作キャラクター選択用のselectタグ -->
+    <label for="myCharacter">使用キャラ：</label><br>
+    <select id="myCharacter" name="myCharacter">
+        <%
+        for (String chara : characters) {
+        %>
+        <option value="<%=chara%>"><%=chara%></option>
+        <%
+        }
+        %>
+    </select>
+    <br>
+    <!-- 対策キャラクター選択用のselectタグ -->
+    <label for="yourCharacter">対策キャラクター選択：</label><br>
+    <select id="yourCharacter" name="yourCharacter">
+        <%
+        for (String chara : characters) {
+        %>
+        <option value="<%=chara%>"><%=chara%></option>
+        <%
+        }
+        %>
+    </select>
+    <br>
+	  <!-- javascriptの＋－ボタンで入力ボックスを増やす -->
+    <div id="input_pluralBox">
+        <div id="input_plural">
+            <form action="/SaveDataServlet" method="post">
+                勝<input type="radio" name="worl" value="1">
+                負<input type="radio" name="worl" value="0"><br>
+                キツイ所<br>
+                <input type="text" name="point" class="form-control" placeholder="この技がきつい等"><br>
+                対策<br>
+                <textarea name="cpoint" class="form-control" placeholder="全体的な対策" cols="30" rows="10"></textarea><br>
+                <input type="button" value="＋" class="add pluralBtn">
+                <input type="button" value="－" class="del pluralBtn">
+                <input type="submit" value="登録">
+            </form>
+        </div>
+    </div>
+	<!-- ここまで -->
 	</form>
-
+	
+	<!-- 前のページに戻る -->
 	<form action="/topServlet">
 		<input type="submit" value="TOPへ">
 	</form>
 
 	<script
 		src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-	<script type="text/javascript">
-		$(document).on("click", ".add", function() {
-			$(this).parent().clone(true).insertAfter($(this).parent());
-		});
-		$(document).on("click", ".del", function() {
-			var target = $(this).parent();
-			if (target.parent().children().length > 1) {
-				target.remove();
-			}
-		});
-	</script>
+	<script src="/js/home.js"></script>
 </body>
 </html>

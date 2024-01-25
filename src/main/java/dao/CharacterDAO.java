@@ -12,9 +12,11 @@ import beans.GameCharacter;
 
 public class CharacterDAO {
 
-	private final String JDBC_URL = "jdbc:postgresql://localhost:5432/checker";
-	private final String DB_USER = "postgres";
-	private final String DB_PASS = "admin";
+	private final static String JDBC_URL = "jdbc:postgresql://localhost:5432/checker";
+	private final static String DB_USER = "postgres";
+	private final static String DB_PASS = "admin";
+
+	Connection conn = null;
 
 	//characterテーブルからキャラクターを名を取得するメソッド
 	public List<GameCharacter> getAllCharacters() {
@@ -37,9 +39,9 @@ public class CharacterDAO {
 						ResultSet resultSet = pStmt.executeQuery()) {
 
 					while (resultSet.next()) {
-						int id = resultSet.getInt("character_id");
-						String name = resultSet.getString("character_name");
-						characters.add(new GameCharacter(id, name));
+						int characterId = resultSet.getInt("characterId");
+						String characterName = resultSet.getString("characterName");
+						characters.add(new GameCharacter(characterId, characterName));
 					}
 				}
 			}
@@ -70,5 +72,26 @@ public class CharacterDAO {
 		}
 		return characters;
 	}
-
+	
+	
+	//キャラクターIDの取得
+	public static int getCharacterIdByName(String characterName) {
+	        int characterId = -1; // エラー時のデフォルト値
+	        try {
+	        	Connection conn = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS);{
+	    			String sql = "SELECT character_id FROM character WHERE character_name = ?";
+	    			try (PreparedStatement pStmt = conn.prepareStatement(sql)) {
+	    				pStmt.setString(1, characterName);
+	    				try (ResultSet resultSet = pStmt.executeQuery()) {
+	    					if (resultSet.next()) {
+	    						characterId = resultSet.getInt("character_id");
+	    					}
+	                    }
+	                }
+	            }
+	        } catch (SQLException e) {
+	            e.printStackTrace(); // エラー処理は適切に行ってください
+	        }
+	        return characterId;
+	    }
 }
