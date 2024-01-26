@@ -12,13 +12,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import beans.GameCharacter;
 import dao.TitleDAO;
+import model.GameCharacter;
 import model.Title;
 
 @WebServlet("/homeServlet")
 public class HomeServlet extends HttpServlet {
-    // ... (他のコード)
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -28,15 +27,16 @@ public class HomeServlet extends HttpServlet {
 
         if (selectedTitle != null && !selectedTitle.isEmpty()) {
             try {
+            	//セッションの取得
                 HttpSession session = request.getSession();
                 
+                //GameCharacterインスタンスの生成
                 GameCharacter gc = new GameCharacter();
                 
                 //セッションに選択したタイトル名を登録
                 session.setAttribute("キャラクター情報",gc);
                 // titleDAOのインスタンスを生成
                 TitleDAO titleDAO = new TitleDAO();
-                
                 
                 //選択したタイトル名を引数にして検索したタイトル情報をtitlesに登録
                 List<Title> titles = titleDAO.searchTitles(selectedTitle);
@@ -57,12 +57,6 @@ public class HomeServlet extends HttpServlet {
                 // キャラクターリストをsessionスコープにセット
                 session.setAttribute("登録キャラクターリスト", characters);
                 
-//                //情報が取得できているか確認
-//                System.out.println(titles);	//キー　ID　値　タイトル
-//                System.out.println(titleId);	//キー
-//                System.out.println(selectedTitle);	//値
-//                System.out.println(characters);	//キャラリスト
-                
                 //gcに各項目の値を渡す
                 gc.setSelectedTitle(selectedTitle);
                 gc.setCharacters(characters);
@@ -72,11 +66,13 @@ public class HomeServlet extends HttpServlet {
                 RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/home.jsp");
                 dispatcher.forward(request, response);
             } catch (SQLException e) {
-                e.printStackTrace(); // エラーハンドリングは必要に応じて追加
+            	// エラーハンドリングは必要に応じて追加
+                e.printStackTrace();
             }
         } else {
-            // タイトルが指定されていない場合はトップページへリダイレクトなど
-            response.sendRedirect(request.getContextPath() + "/top.jsp");
+            // タイトルが指定されていない場合はトップページへ
+        	RequestDispatcher dispatcher = request.getRequestDispatcher("/topServlet");
+        	dispatcher.forward(request, response);
         }
     }
 }

@@ -14,7 +14,7 @@ public class SaveDataDAO {
 
     private final String INSERT_DATA_SQL = "INSERT INTO point (title_id, my_character_id, your_character_id, worl, point, cpoint) VALUES (?, ?, ?, ?, ?, ?)";
 
-    public void saveData(int titleId, int myCharacterId, int yourCharacterId, String result, String point, String cpoint) {
+    public void saveData(int titleId, int myCharacterId, int yourCharacterId, Boolean result, String point, String cpoint) {
         try (
         		
         		Connection conn = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS)){
@@ -22,7 +22,7 @@ public class SaveDataDAO {
                 statement.setInt(1, titleId);
                 statement.setInt(2, myCharacterId);
                 statement.setInt(3, yourCharacterId);
-                statement.setString(4, result);
+                statement.setBoolean(4, result);
                 statement.setString(5, point);
                 statement.setString(6, cpoint);
 

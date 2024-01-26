@@ -112,19 +112,47 @@ public class TitleDAO {
     public int getTitleId(String titleName) {
         String sql = "SELECT title_id FROM title WHERE title_name = ?";
 
-        try (	//接続処理
-        		Connection conn = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS);
-        		PreparedStatement pStmt = conn.prepareStatement(sql)) {
-            	pStmt.setString(1, titleName);
-            	ResultSet resultSet = pStmt.executeQuery();
+        try (Connection conn = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS);
+             PreparedStatement pStmt = conn.prepareStatement(sql)) {
+
+            pStmt.setString(1, titleName);
+            ResultSet resultSet = pStmt.executeQuery();
 
             if (resultSet.next()) {
-                return resultSet.getInt("title_id");
+                int titleId = resultSet.getInt("title_id");
+                
+                // タイトルIDが存在するかどうかを確認
+                if (!resultSet.wasNull()) {
+                    return titleId;
+                } else {
+                    throw new SQLException("タイトルIDが無効です。");
+                }
             } else {
-                throw new SQLException("このタイトルは見つかりません" + titleName);
+                throw new SQLException("このタイトルは見つかりません: " + titleName);
             }
         } catch (SQLException e) {
-            throw new RuntimeException("Error getting title ID.", e);
+            throw new RuntimeException("タイトルIDを取得できませんでした", e);
+        }
+    }
+
+    
+    //DBから全タイトルを検索するメソッド
+    public List<String> getAllTitles() {
+        String sql = "SELECT title FROM title;";
+
+        try (
+            Connection conn = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS);
+            PreparedStatement pStmt = conn.prepareStatement(sql);
+            ResultSet resultSet = pStmt.executeQuery();
+        ) {
+            List<String> titles = new ArrayList<>();
+            while (resultSet.next()) {
+                String title = resultSet.getString("title");
+                titles.add(title);
+            }
+            return titles;
+        } catch (SQLException e) {
+            throw new RuntimeException("タイトル名を取得できませんでした", e);
         }
     }
     
@@ -150,7 +178,9 @@ public class TitleDAO {
 
             return characters;
         } catch (SQLException e) {
-            throw new RuntimeException("Error getting characters.", e);
+            throw new RuntimeException("キャラクター一覧を取得できませんでした", e);
         }
     }
+    
+    
 }

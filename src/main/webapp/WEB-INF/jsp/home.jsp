@@ -3,7 +3,7 @@
 <%@ page import="java.util.List"%>
 <%@ page import="model.Title"%>
 <%@ page import="dao.TitleDAO"%>
-<%@ page import="beans.GameCharacter"%>
+<%@ page import="model.GameCharacter"%>
 <%@ page import="dao.CharacterDAO"%>
 <%
 GameCharacter gc = (GameCharacter) session.getAttribute("キャラクター情報");
@@ -18,13 +18,15 @@ List<String> characters = (List<String>) session.getAttribute("登録キャラ�
 <title>登録画面</title>
 </head>
 <body>
-	<h1><%=gc.getSelectedTitle()%>のページ
-	</h1>
+	<h1><%=gc.getSelectedTitle()%>のページ</h1>
 	<br>
-	<!-- 自操作キャラクター選択用のselectタグ -->
 	<form action="/checker/SaveDataServlet" method="post">
+		<!-- hidenで表示されないがtitleIdの情報を送る処理の一文 -->
+		<input type="hidden" name="titleId" value="<%=gc.getTitleId()%>">
+		<!-- 自操作キャラクター選択用のselectタグ -->
 		<label for="myCharacter">使用キャラ：</label><br>
 		<select id="myCharacter" name="myCharacter">
+			<option value="" disabled selected>キャラクターを選択してください</option>
     		<% for (String chara : characters) { %>
        		 <option value="<%=chara%>"><%=chara%></option>
     		<% } %>
@@ -32,6 +34,7 @@ List<String> characters = (List<String>) session.getAttribute("登録キャラ�
 		<!-- 対策キャラクター選択用のselectタグ -->
 		<label for="yourCharacter">対策キャラクター選択：</label><br>
 		<select id="yourCharacter" name="yourCharacter">
+			<option value="" disabled selected>キャラクターを選択してください</option>
     		<% for (String chara : characters) { %>
        		 <option value="<%=chara%>"><%=chara%></option>
     		<% } %>
@@ -39,14 +42,12 @@ List<String> characters = (List<String>) session.getAttribute("登録キャラ�
 		<!-- javascriptの＋－ボタンで入力ボックスを増やす -->
 		<div id="input_pluralBox">
 			<div id="input_plural">
-				勝<input type="radio" name="worl" value="1">
+				勝<input type="radio" name="worl" value="1" checked>
 				負<input type="radio" name="worl" value="0"><br>
 				キツイ所<br>
-				<input type="text" name="point" class="form-control" placeholder="この技がきつい等"><br>
+				<input type="text" name="point" class="form-control" placeholder="この技がきつい等" required><br>
 				対策<br>
-				<textarea name="cpoint" class="form-control" placeholder="全体的な対策" cols="30" rows="10"></textarea><br>
-				<input type="button" value="＋" class="add pluralBtn">
-				<input type="button" value="－" class="del pluralBtn">
+				<textarea name="cpoint" class="form-control" placeholder="全体的な対策" cols="30" rows="10" style="resize: none;"required></textarea><br>
 				<input type="submit" value="登録">
 			</div>
 		</div>
@@ -59,6 +60,5 @@ List<String> characters = (List<String>) session.getAttribute("登録キャラ�
 	</form>
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-	<script src="/js/home.js"></script>
 </body>
 </html>

@@ -4,6 +4,8 @@
 <%@ page import="java.util.List"%>
 <%@ page import="dao.TitleDAO"%>
 <%@ page import="model.Title"%>
+<%@ page import="java.util.Map" %>
+<%@ page import="java.util.Map.Entry" %>
 
 <!DOCTYPE html>
 <html>
@@ -17,7 +19,7 @@
 	<form id="searchForm" method="get">
 		<p>
 			何のタイトルについて調べる？<br>
-			<input type="text" name="title" placeholder="部分検索可">
+			<input type="text" name="title" placeholder="部分検索可" required>
 			<input type="button" value="検索" onclick="submitForm()">
 		</p>
 	</form>
@@ -38,8 +40,7 @@ if (keyword != null && !keyword.isEmpty()) {
 		<%
 		for (Title title : titles) {
 		%>
-		<li>
-		<a href="<%=request.getContextPath()%>/homeServlet?selectedTitle=<%=title.getTitle()%>"><%=title.getTitle()%></a>
+		<li><a href="<%=request.getContextPath()%>/homeServlet?selectedTitle=<%=title.getTitle()%>"><%=title.getTitle()%></a></li>
 		<%
 		}
 		%>
@@ -60,14 +61,27 @@ e.printStackTrace();
 		<p>
 			タイトルが見つからない場合<br>
 			新規登録タイトル登録(正式なタイトル名で登録してください)<br>
-			<input type="text" name="addTitle" id="addTitle" placeholder="追加タイトル名"><br>
+			<input type="text" name="addTitle" id="addTitle" placeholder="追加タイトル名" required><br>
 			キャラクター新規登録<br>
-			<input text="text" name="addChara" id="addChara" placeholder="追加キャラクター名"><br>
+			<input text="text" name="addChara" id="addChara" placeholder="追加キャラクター名" required><br>
 			<input type="button" value="登録" onclick="register()">
 		</p>
 	</form>
-
-
+	
+	<!-- 追加済みタイトル一覧 -->
+	<h2>登録済みタイトル</h2>
+	<ul>
+    <%
+    List<String> titleList = (List<String>) request.getAttribute("titleList");
+    if (titleList != null && !titleList.isEmpty()) {
+        for (String title : titleList) {
+    %>
+             <li><a href="<%=request.getContextPath()%>/homeServlet?selectedTitle=<%=title%>"><%=title%></a></li>
+    <% } } else { %>
+        <p>タイトルが登録されていません</p>
+    <% } %>
+</ul>
+	
 	<!--ajaxを適用 -->
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	
@@ -77,7 +91,6 @@ e.printStackTrace();
 			document.getElementById("searchForm").submit();
 		}
 	</script>
-
 	<!-- DBにタイトルとキャラクターを登録するjavascript -->
 	<script type="text/javascript">
 		function register() {
@@ -92,7 +105,6 @@ e.printStackTrace();
 					addChara : addChara
 				},
 				success : function(response) {
-					// 登録成功・失敗メッセージを表示
 					alert("登録しました。");
 				},
 				error : function() {
