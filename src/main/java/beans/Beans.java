@@ -5,7 +5,7 @@ import java.io.Serializable;
 public class Beans implements Serializable{
 	
 	private String title;		//ゲームタイトル名
-	private int worl;			//勝敗　winner or loserの略
+	private boolean worl;			//勝敗　winner or loserの略
 	private String myChara;		//自キャラ
 	private String yourChara;	//相手キャラ
 	private String point;		//ピンポイントな対策
@@ -15,22 +15,23 @@ public class Beans implements Serializable{
 	private Beans() {}
 	
 	//home画面表示用のコンストラクタ
-	private Beans(
-			 String title,		//ゲームタイトル名
-			 int worl,			//勝敗　winner or loserの略
-			 String myChara,		//自キャラ
-			 String yourChara,	//相手キャラ
-			 String point,		//ピンポイントな対策
-			 String cpoint
-			) {
-		this.title= title;
-		this.worl= worl;
-		this.myChara= myChara;
-		this.yourChara= yourChara;
-		this.point= point;
-		this.cpoint= cpoint;
-	}
-
+	
+	public Beans(
+            String title,
+            boolean worl,
+            String myChara,
+            String yourChara,
+            String point,
+            String cpoint
+    ) {
+        this.title = title;
+        this.worl = worl;
+        this.myChara = myChara;
+        this.yourChara = yourChara;
+        this.point = point;
+        this.cpoint = cpoint;
+    }
+	
 	public String getTitle() {
 		return title;
 	}
@@ -39,11 +40,11 @@ public class Beans implements Serializable{
 		this.title = title;
 	}
 
-	public int getWorl() {
+	public boolean getWorl() {
 		return worl;
 	}
 
-	public void setWorl(int worl) {
+	public void setWorl(boolean worl) {
 		this.worl = worl;
 	}
 

@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import beans.Beans;
 import model.GameCharacter;
 
 public class CharacterDAO {
@@ -80,7 +81,8 @@ public class CharacterDAO {
 	        try {
 	        	Connection conn = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS);{
 	    			String sql = "SELECT character_id FROM character WHERE character_name = ?";
-	    			try (PreparedStatement pStmt = conn.prepareStatement(sql)) {
+	    			try (
+	    					PreparedStatement pStmt = conn.prepareStatement(sql)) {
 	    				pStmt.setString(1, characterName);
 	    				try (ResultSet resultSet = pStmt.executeQuery()) {
 	    					if (resultSet.next()) {
@@ -90,8 +92,64 @@ public class CharacterDAO {
 	                }
 	            }
 	        } catch (SQLException e) {
-	            e.printStackTrace(); // エラー処理は適切に行ってください
+	            e.printStackTrace();
 	        }
 	        return characterId;
 	    }
+	//自操作キャラクター名からpointテーブルの情報を引っ張ってくるメソッド
+	public List<Beans> getAllCharacterData(String myCharacter) {
+	    List<Beans> beansList = new ArrayList<>();
+	    Connection conn = null;
+	    PreparedStatement pstmt = null;
+	    ResultSet resultSet = null;
+
+	    try {
+	        conn = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS);
+
+	        // myChara が myCharacter または yourChara が myCharacter のデータを取得するクエリ
+	        String sql = "SELECT title, worl, yourChara, point, cpoint FROM point WHERE myChara = ? OR yourChara = ?";
+	        pstmt = conn.prepareStatement(sql);
+	        pstmt.setString(1, myCharacter);
+	        pstmt.setString(2, myCharacter);
+
+	        resultSet = pstmt.executeQuery();
+
+	        while (resultSet.next()) {
+	            String title = resultSet.getString("title");
+	            boolean worl = resultSet.getBoolean("worl");
+	            String yourCharacter = resultSet.getString("yourChara");
+	            String point = resultSet.getString("point");
+	            String cpoint = resultSet.getString("cpoint");
+
+	            Beans beans = new Beans(title, worl, myCharacter, yourCharacter, point, cpoint);
+	            beansList.add(beans);
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    } finally {
+	        // クローズ処理を実行
+	        if (resultSet != null) {
+	            try {
+	                resultSet.close();
+	            } catch (SQLException e) {
+	                e.printStackTrace();
+	            }
+	        }
+	        if (pstmt != null) {
+	            try {
+	                pstmt.close();
+	            } catch (SQLException e) {
+	                e.printStackTrace();
+	            }
+	        }
+	        if (conn != null) {
+	            try {
+	                conn.close();
+	            } catch (SQLException e) {
+	                e.printStackTrace();
+	            }
+	        }
+	    }
+	    return beansList;
+	}
 }

@@ -14,11 +14,10 @@
 <title>TOP</title>
 </head>
 <body>
-	<h1>タイトル検索画面</h1>
+	<h3>タイトル検索</h3>
 
 	<form id="searchForm" method="get">
 		<p>
-			何のタイトルについて調べる？<br>
 			<input type="text" name="title" placeholder="部分検索可" required>
 			<input type="button" value="検索" onclick="submitForm()">
 		</p>
@@ -45,28 +44,11 @@ if (keyword != null && !keyword.isEmpty()) {
 		}
 		%>
 	</ul>
-	<%
-} else {
-%>
-	<p>登録がありません</p>
-	<%
-}
-} catch (SQLException e) {
-e.printStackTrace();
-}
-}
-%>
-<!-- タイトル、キャラクター登録 -->
-	<form onsubmit="return check()" id="registerForm">
-		<p>
-			タイトルが見つからない場合<br>
-			新規登録タイトル登録(正式なタイトル名で登録してください)<br>
-			<input type="text" name="addTitle" id="addTitle" placeholder="追加タイトル名" required><br>
-			キャラクター新規登録<br>
-			<input text="text" name="addChara" id="addChara" placeholder="追加キャラクター名" required><br>
-			<input type="button" value="登録" onclick="register()">
-		</p>
-	</form>
+	<% } else { %>
+		<p>登録がありません</p>
+	<% } } catch (SQLException e) {
+		e.printStackTrace();
+		}} %>
 	
 	<!-- 追加済みタイトル一覧 -->
 	<h2>登録済みタイトル</h2>
@@ -84,6 +66,18 @@ e.printStackTrace();
         <p>タイトルが登録されていません</p>
     <% } %>
 	</ul>
+	
+	<!-- タイトル、キャラクター登録 -->
+	<form onsubmit="return check()" id="registerForm">
+		<p>
+			タイトル新規追加(上記に登録ある場合でも入力可))<br>
+			<input type="text" name="addTitle" id="addTitle" placeholder="追加タイトル名" required><br>
+			キャラクター新規登録<br>
+			<input text="text" name="addChara" id="addChara" placeholder="追加キャラクター名" required><br>
+		</p>
+		<input type="button" value="登録" onclick="register()">
+	</form>
+	
 	
 	<!--ajaxを適用 -->
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
