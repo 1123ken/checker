@@ -75,12 +75,15 @@ e.printStackTrace();
     List<String> titleList = (List<String>) request.getAttribute("titleList");
     if (titleList != null && !titleList.isEmpty()) {
         for (String title : titleList) {
+            // カンマで分割し、タイトル名の部分だけを取得
+            String[] parts = title.split(",");
+            String titleName = parts.length > 1 ? parts[1].trim() : title;
     %>
-             <li><a href="<%=request.getContextPath()%>/homeServlet?selectedTitle=<%=title%>"><%=title%></a></li>
+        <li><a href="<%=request.getContextPath()%>/homeServlet?selectedTitle=<%=titleName%>"><%=titleName%></a></li>
     <% } } else { %>
         <p>タイトルが登録されていません</p>
     <% } %>
-</ul>
+	</ul>
 	
 	<!--ajaxを適用 -->
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -106,6 +109,7 @@ e.printStackTrace();
 				},
 				success : function(response) {
 					alert("登録しました。");
+					location.reload();
 				},
 				error : function() {
 					alert("登録に失敗しました。");

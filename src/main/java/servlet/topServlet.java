@@ -33,6 +33,7 @@ public class topServlet extends HttpServlet {
         List<String> titleList = titleDAO.getAllTitles();
         request.setAttribute("titleList", titleList);
 		
+        System.out.println(titleList);
 
 		RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/top.jsp");
 		dispatcher.forward(request, response);

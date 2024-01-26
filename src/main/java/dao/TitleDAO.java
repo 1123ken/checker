@@ -138,22 +138,23 @@ public class TitleDAO {
     
     //DBから全タイトルを検索するメソッド
     public List<String> getAllTitles() {
-        String sql = "SELECT title FROM title;";
+        List<String> titleList = new ArrayList<>();
+        String sql = "SELECT title_name FROM title";
 
         try (
             Connection conn = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS);
             PreparedStatement pStmt = conn.prepareStatement(sql);
             ResultSet resultSet = pStmt.executeQuery();
         ) {
-            List<String> titles = new ArrayList<>();
             while (resultSet.next()) {
-                String title = resultSet.getString("title");
-                titles.add(title);
+                String titleName = resultSet.getString("title_name");
+                titleList.add(titleName);
             }
-            return titles;
         } catch (SQLException e) {
-            throw new RuntimeException("タイトル名を取得できませんでした", e);
+            throw new RuntimeException("Error getting all titles.", e);
         }
+
+        return titleList;
     }
     
     
