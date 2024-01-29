@@ -25,7 +25,6 @@ public class SaveDataServlet extends HttpServlet {
     	String titleId = request.getParameter("titleId");
         String myCharacterName = request.getParameter("myCharacter");
         String yourCharacterName = request.getParameter("yourCharacter");
-        boolean result = "1".equals(request.getParameter("result"));
         String point = request.getParameter("point");
         String cpoint = request.getParameter("cpoint");
         
@@ -35,7 +34,7 @@ public class SaveDataServlet extends HttpServlet {
 
         // SaveDataDAOに値を渡してデータベースに保存
         SaveDataDAO saveDataDAO = new SaveDataDAO();
-        saveDataDAO.saveData(Integer.parseInt(titleId), myCharacterId, yourCharacterId, result, point, cpoint);
+        saveDataDAO.saveData(Integer.parseInt(titleId), myCharacterId, yourCharacterId, point, cpoint);
         
         //入力後home.jspに戻る
         RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/home.jsp");

@@ -49,18 +49,13 @@
             }
             %>
         </select> <br>
-        <!-- javascriptの＋－ボタンで入力ボックスを増やす -->
-        <div id="input_pluralBox">
-            <div id="input_plural">
-                勝<input type="radio" name="worl" value="1" checked> 負<input
-                    type="radio" name="worl" value="0"><br> キツイ所<br>
-                <input type="text" name="point" class="form-control"
-                    placeholder="この技がきつい等" required><br> 対策<br>
-                <textarea name="cpoint" class="form-control" placeholder="全体的な対策"
-                    cols="30" rows="10" style="resize: none;" required></textarea>
+            <div>
+                キツイ所<br>
+                <input type="text" name="point" class="form-control" placeholder="この技がきつい等" required><br>
+                対策<br>
+                <textarea name="cpoint" class="form-control" placeholder="全体的な対策" cols="30" rows="10" style="resize: none;" required></textarea>
                 <br> <input type="submit" value="登録">
             </div>
-        </div>
     </form>
     <!-- ここまで -->
 
@@ -68,8 +63,6 @@
     <table border="1">
         <thead>
             <tr>
-                <!-- "対戦キャラ"の<th>を削除 -->
-                <th>勝敗</th>
                 <th>きつい技</th>
                 <th>対策</th>
             </tr>
@@ -81,8 +74,6 @@
                 for (Beans beans : beansList) {
             %>
             <tr>
-                <!-- <td><%=beans.getYourChara()%></td> を削除 -->
-                <td><%=beans.getWorl() ? "勝ち" : "負け"%></td>
                 <td><%=beans.getPoint()%></td>
                 <td><%=beans.getCpoint()%></td>
             </tr>
@@ -142,8 +133,6 @@
                 if (data != null && data.length > 0) {
                     for (var i = 0; i < data.length; i++) {
                         var row = "<tr>" +
-                            // "<td>" + data[i].yourChara + "</td>" を削除
-                            "<td>" + (data[i].worl ? "勝利" : "敗北") + "</td>" +
                             "<td>" + data[i].point + "</td>" +
                             "<td>" + data[i].cpoint + "</td>" +
                             "</tr>";

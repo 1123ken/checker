@@ -110,7 +110,7 @@ public class CharacterDAO {
 			conn = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS);
 
 			//myCharacterとyourCharacterからpointテーブルの内容を検索
-			String sql = "SELECT title_id, worl, your_character_id, point, cpoint FROM point WHERE my_character_id = (SELECT character_id FROM character WHERE character_name = ?) AND your_character_id = (SELECT character_id FROM character WHERE character_name = ?)";
+			String sql = "SELECT title_id, your_character_id, point, cpoint FROM point WHERE my_character_id = (SELECT character_id FROM character WHERE character_name = ?) AND your_character_id = (SELECT character_id FROM character WHERE character_name = ?)";
 
 			pstmt = conn.prepareStatement(sql);
 
@@ -124,13 +124,12 @@ public class CharacterDAO {
 			//空白行まで取得
 			while (resultSet.next()) {
 				String title_id = resultSet.getString("title_id");
-				boolean worl = resultSet.getBoolean("worl");
 				String yourCharacterFromDB = resultSet.getString("your_character_id");
 				String point = resultSet.getString("point");
 				String cpoint = resultSet.getString("cpoint");
 
 				//beansインスタンスに保管
-				Beans beans = new Beans(title_id, worl, myCharacter, yourCharacterFromDB, point, cpoint);
+				Beans beans = new Beans(title_id, myCharacter, yourCharacterFromDB, point, cpoint);
 				bl.add(beans);
 			}
 		} catch (SQLException e) {

@@ -19,23 +19,30 @@ public class GetDataServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
     	
+    	//選択キャラクターの取得
         String myCharacter = request.getParameter("myCharacter");
         String yourCharacter = request.getParameter("yourCharacter");
-
+        
+        //選択キャラクターの片方がnullの場合の処理
         if (myCharacter != null && !myCharacter.isEmpty() && yourCharacter != null && !yourCharacter.isEmpty()) {
         	
-            // 両方のキャラクターが指定された場合の処理
+        	//インスタンス生成
             CharacterDAO characterDAO = new CharacterDAO();
-            List<Beans> beansList = characterDAO.getAllCharacterData(myCharacter, yourCharacter);
+            
+            //BeansリストblにcharacterDAOのgetAllCaracterDataメソッドの値を代入
+            List<Beans> bl = characterDAO.getAllCharacterData(myCharacter, yourCharacter);
 
             // レスポンスにJSON形式でデータを返す
             response.setContentType("application/json");
             response.setCharacterEncoding("UTF-8");
-
+            
+            //ObjectMapperインスタンスを生成
             ObjectMapper mapper = new ObjectMapper();
-            String json = mapper.writeValueAsString(beansList);
-
+            //jsonに当て込む
+            String json = mapper.writeValueAsString(bl);
+            //
             response.getWriter().write(json);
+            
         } else if (myCharacter != null && !myCharacter.isEmpty()) {
         	
             // myCharacter のみが指定された場合の処理
