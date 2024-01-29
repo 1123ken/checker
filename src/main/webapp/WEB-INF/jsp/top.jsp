@@ -14,7 +14,12 @@
 <title>TOP</title>
 </head>
 <body>
+	
+	<h1>対戦ゲーム対策掲示板</h1>
+	
+	<div>
 	<h3>タイトル検索</h3>
+	</div>
 
 	<form id="searchForm" method="get">
 		<p>
@@ -77,7 +82,6 @@ if (keyword != null && !keyword.isEmpty()) {
 		</p>
 		<input type="button" value="登録" onclick="register()">
 	</form>
-	
 	
 	<!--ajaxを適用 -->
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>

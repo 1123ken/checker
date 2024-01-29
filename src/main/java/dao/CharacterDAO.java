@@ -73,83 +73,93 @@ public class CharacterDAO {
 		}
 		return characters;
 	}
-	
-	
+
 	//キャラクターIDの取得
 	public static int getCharacterIdByName(String characterName) {
-	        int characterId = -1; // エラー時のデフォルト値
-	        try {
-	        	Connection conn = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS);{
-	    			String sql = "SELECT character_id FROM character WHERE character_name = ?";
-	    			try (
-	    					PreparedStatement pStmt = conn.prepareStatement(sql)) {
-	    				pStmt.setString(1, characterName);
-	    				try (ResultSet resultSet = pStmt.executeQuery()) {
-	    					if (resultSet.next()) {
-	    						characterId = resultSet.getInt("character_id");
-	    					}
-	                    }
-	                }
-	            }
-	        } catch (SQLException e) {
-	            e.printStackTrace();
-	        }
-	        return characterId;
-	    }
-	//自操作キャラクター名からpointテーブルの情報を引っ張ってくるメソッド
-	public List<Beans> getAllCharacterData(String myCharacter) {
-	    List<Beans> beansList = new ArrayList<>();
-	    Connection conn = null;
-	    PreparedStatement pstmt = null;
-	    ResultSet resultSet = null;
-
-	    try {
-	        conn = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS);
-
-	        // myChara が myCharacter または yourChara が myCharacter のデータを取得するクエリ
-	        String sql = "SELECT title, worl, yourChara, point, cpoint FROM point WHERE myChara = ? OR yourChara = ?";
-	        pstmt = conn.prepareStatement(sql);
-	        pstmt.setString(1, myCharacter);
-	        pstmt.setString(2, myCharacter);
-
-	        resultSet = pstmt.executeQuery();
-
-	        while (resultSet.next()) {
-	            String title = resultSet.getString("title");
-	            boolean worl = resultSet.getBoolean("worl");
-	            String yourCharacter = resultSet.getString("yourChara");
-	            String point = resultSet.getString("point");
-	            String cpoint = resultSet.getString("cpoint");
-
-	            Beans beans = new Beans(title, worl, myCharacter, yourCharacter, point, cpoint);
-	            beansList.add(beans);
-	        }
-	    } catch (SQLException e) {
-	        e.printStackTrace();
-	    } finally {
-	        // クローズ処理を実行
-	        if (resultSet != null) {
-	            try {
-	                resultSet.close();
-	            } catch (SQLException e) {
-	                e.printStackTrace();
-	            }
-	        }
-	        if (pstmt != null) {
-	            try {
-	                pstmt.close();
-	            } catch (SQLException e) {
-	                e.printStackTrace();
-	            }
-	        }
-	        if (conn != null) {
-	            try {
-	                conn.close();
-	            } catch (SQLException e) {
-	                e.printStackTrace();
-	            }
-	        }
-	    }
-	    return beansList;
+		int characterId = -1; // エラー時のデフォルト値
+		try {
+			Connection conn = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS);
+			{
+				String sql = "SELECT character_id FROM character WHERE character_name = ?";
+				try (
+						PreparedStatement pStmt = conn.prepareStatement(sql)) {
+					pStmt.setString(1, characterName);
+					try (ResultSet resultSet = pStmt.executeQuery()) {
+						if (resultSet.next()) {
+							characterId = resultSet.getInt("character_id");
+						}
+					}
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return characterId;
 	}
+
+	//自操作キャラクター名からpointテーブルの情報を引っ張ってくるメソッド
+	public List<Beans> getAllCharacterData(String myCharacter, String yourCharacter) {
+		//宣言＋初期化処理
+		List<Beans> bl = new ArrayList<>();
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet resultSet = null;
+
+		try {
+			//接続処理
+			conn = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS);
+
+			//myCharacterとyourCharacterからpointテーブルの内容を検索
+			String sql = "SELECT title_id, worl, your_character_id, point, cpoint FROM point WHERE my_character_id = (SELECT character_id FROM character WHERE character_name = ?) AND your_character_id = (SELECT character_id FROM character WHERE character_name = ?)";
+
+			pstmt = conn.prepareStatement(sql);
+
+			//プレースホルダーにセット
+			pstmt.setString(1, myCharacter);
+			pstmt.setString(2, yourCharacter);
+
+			//resultSetに検索結果の格納
+			resultSet = pstmt.executeQuery();
+
+			//空白行まで取得
+			while (resultSet.next()) {
+				String title_id = resultSet.getString("title_id");
+				boolean worl = resultSet.getBoolean("worl");
+				String yourCharacterFromDB = resultSet.getString("your_character_id");
+				String point = resultSet.getString("point");
+				String cpoint = resultSet.getString("cpoint");
+
+				//beansインスタンスに保管
+				Beans beans = new Beans(title_id, worl, myCharacter, yourCharacterFromDB, point, cpoint);
+				bl.add(beans);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			// クローズ処理を実行
+			if (resultSet != null) {
+				try {
+					resultSet.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		return bl;
+	}
+
 }

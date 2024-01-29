@@ -11,10 +11,9 @@ public class Beans implements Serializable{
 	private String point;		//ピンポイントな対策
 	private String cpoint;		//全体的な対策
 	
-	//空のコンストラクタ
-	private Beans() {}
-	
 	//home画面表示用のコンストラクタ
+	
+	public Beans() {}
 	
 	public Beans(
             String title,
