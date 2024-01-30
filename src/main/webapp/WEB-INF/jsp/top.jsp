@@ -3,7 +3,7 @@
 <%@ page import="java.sql.SQLException"%>
 <%@ page import="java.util.List"%>
 <%@ page import="dao.TitleDAO"%>
-<%@ page import="model.Title"%>
+<%@ page import="beans.Title"%>
 <%@ page import="java.util.Map" %>
 <%@ page import="java.util.Map.Entry" %>
 

@@ -3,111 +3,163 @@ package beans;
 import java.io.Serializable;
 
 /**
- * JavaBeansクラス
+ * ゲームデータを保持するJavaBeansクラスです。
+ * Serializable インターフェースを実装しており、オブジェクトの直列化が可能です。
+ * 
+ * <p>このクラスは、ゲームタイトル名、自分の操作キャラ名、対策したい相手キャラ名、
+ * 相手をする上できつい所を示すポイント、全体的なキャラ対策を示すポイントを保持します。</p>
+ * 
+ * <p>フィールド:
+ *   <ul>
+ *     <li>{@code title} - ゲームのタイトル名</li>
+ *     <li>{@code myChara} - 自分の操作キャラ名</li>
+ *     <li>{@code yourChara} - 対策したい相手キャラ名</li>
+ *     <li>{@code point} - 相手をする上できつい所を示すポイント</li>
+ *     <li>{@code cpoint} - 全体的なキャラ対策を示すポイント</li>
+ *   </ul>
+ * </p>
+ * 
+ * <p>コンストラクタ:
+ *   <ul>
+ *     <li>{@link #Beans()} - デフォルトコンストラクタ</li>
+ *     <li>{@link #Beans(String, String, String, String, String)} - パラメータつきコンストラクタ</li>
+ *   </ul>
+ * </p>
+ * 
+ * <p>メソッド:
+ *   <ul>
+ *     <li>{@link #getTitle()} - ゲームのタイトル名を取得</li>
+ *     <li>{@link #setTitle(String)} - ゲームのタイトル名を設定</li>
+ *     <li>{@link #getMyChara()} - 自分の操作キャラ名を取得</li>
+ *     <li>{@link #setMyChara(String)} - 自分の操作キャラ名を設定</li>
+ *     <li>{@link #getYourChara()} - 対策したい相手キャラ名を取得</li>
+ *     <li>{@link #setYourChara(String)} - 対策したい相手キャラ名を設定</li>
+ *     <li>{@link #getPoint()} - 相手をする上できつい所を示すポイントを取得</li>
+ *     <li>{@link #setPoint(String)} - 相手をする上できつい所を示すポイントを設定</li>
+ *     <li>{@link #getCpoint()} - 全体的なキャラ対策を示すポイントを取得</li>
+ *     <li>{@link #setCpoint(String)} - 全体的なキャラ対策を示すポイントを設定</li>
+ *   </ul>
+ * </p>
+ * 
  * @author 馬場 健太朗
  */
-
 public class Beans implements Serializable {
-	/** javabeansなのでprivateで使用する変数を宣言  */
-	private String title; //ゲームタイトル名
-	private String myChara; //自キャラ
-	private String yourChara; //相手キャラ
-	private String point; //ピンポイントな対策
-	private String cpoint; //全体的な対策
 
-	/** デフォルトコンストラクタ */
-	public Beans() {
-	}
+    // javabeansなのでprivateで使用する変数を宣言
+    private String title;      // ゲームタイトル名
+    private String myChara;    // 自キャラ
+    private String yourChara;  // 相手キャラ
+    private String point;      // ピンポイントな対策
+    private String cpoint;     // 全体的な対策
 
-	/**
-	 * home.jspで使用するコンストラクタ
-	 * @param title 		ゲームのタイトル名
-	 * @param myChara		自分の操作キャラ名
-	 * @param yourChara	対策したいキャラ名
-	 * @param point		相手をする上できつい所
-	 * @param cpoint		全体的なキャラ対策
-	 */
-	public Beans(
-			String title,
-			String myChara,
-			String yourChara,
-			String point,
-			String cpoint) {
-		this.setTitle(title);
-		this.setMyChara(myChara);
-		this.setYourChara(yourChara);
-		this.setPoint(point);
-		this.setCpoint(cpoint);
-	}
+    /** デフォルトコンストラクタ */
+    public Beans() {
+    }
 
-	/**
-	 * @return title
-	 */
-	public String getTitle() {
-		return title;
-	}
+    /**
+     * パラメータつきコンストラクタ
+     * 
+     * @param title     ゲームのタイトル名
+     * @param myChara   自分の操作キャラ名
+     * @param yourChara 対策したい相手キャラ名
+     * @param point     相手をする上できつい所を示すポイント
+     * @param cpoint    全体的なキャラ対策を示すポイント
+     */
+    public Beans(String title, String myChara, String yourChara, String point, String cpoint) {
+        this.setTitle(title);
+        this.setMyChara(myChara);
+        this.setYourChara(yourChara);
+        this.setPoint(point);
+        this.setCpoint(cpoint);
+    }
 
-	/**
-	 * @param title セットする title
-	 */
-	public void setTitle(String title) {
-		this.title = title;
-	}
+    /**
+     * ゲームのタイトル名を取得します。
+     * 
+     * @return ゲームのタイトル名
+     */
+    public String getTitle() {
+        return title;
+    }
 
-	/**
-	 * @return myChara
-	 */
-	public String getMyChara() {
-		return myChara;
-	}
+    /**
+     * ゲームのタイトル名を設定します。
+     * 
+     * @param title ゲームのタイトル名
+     */
+    public void setTitle(String title) {
+        this.title = title;
+    }
 
-	/**
-	 * @param myChara セットする myChara
-	 */
-	public void setMyChara(String myChara) {
-		this.myChara = myChara;
-	}
+    /**
+     * 自分の操作キャラ名を取得します。
+     * 
+     * @return 自分の操作キャラ名
+     */
+    public String getMyChara() {
+        return myChara;
+    }
 
-	/**
-	 * @return yourChara
-	 */
-	public String getYourChara() {
-		return yourChara;
-	}
+    /**
+     * 自分の操作キャラ名を設定します。
+     * 
+     * @param myChara 自分の操作キャラ名
+     */
+    public void setMyChara(String myChara) {
+        this.myChara = myChara;
+    }
 
-	/**
-	 * @param yourChara セットする yourChara
-	 */
-	public void setYourChara(String yourChara) {
-		this.yourChara = yourChara;
-	}
+    /**
+     * 対策したい相手キャラ名を取得します。
+     * 
+     * @return 対策したい相手キャラ名
+     */
+    public String getYourChara() {
+        return yourChara;
+    }
 
-	/**
-	 * @return point
-	 */
-	public String getPoint() {
-		return point;
-	}
+    /**
+     * 対策したい相手キャラ名を設定します。
+     * 
+     * @param yourChara 対策したい相手キャラ名
+     */
+    public void setYourChara(String yourChara) {
+        this.yourChara = yourChara;
+    }
 
-	/**
-	 * @param point セットする point
-	 */
-	public void setPoint(String point) {
-		this.point = point;
-	}
+    /**
+     * 相手をする上できつい所を示すポイントを取得します。
+     * 
+     * @return ピンポイントな対策ポイント
+     */
+    public String getPoint() {
+        return point;
+    }
 
-	/**
-	 * @return cpoint
-	 */
-	public String getCpoint() {
-		return cpoint;
-	}
+    /**
+     * 相手をする上できつい所を示すポイントを設定します。
+     * 
+     * @param point ピンポイントな対策ポイント
+     */
+    public void setPoint(String point) {
+        this.point = point;
+    }
 
-	/**
-	 * @param cpoint セットする cpoint
-	 */
-	public void setCpoint(String cpoint) {
-		this.cpoint = cpoint;
-	}
+    /**
+     * 全体的なキャラ対策を示すポイントを取得します。
+     * 
+     * @return 全体的なキャラ対策ポイント
+     */
+    public String getCpoint() {
+        return cpoint;
+    }
 
+    /**
+     * 全体的なキャラ対策を示すポイントを設定します。
+     * 
+     * @param cpoint 全体的なキャラ対策ポイント
+     */
+    public void setCpoint(String cpoint) {
+        this.cpoint = cpoint;
+    }
 }

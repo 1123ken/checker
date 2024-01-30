@@ -12,9 +12,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import beans.GameCharacter;
+import beans.Title;
 import dao.TitleDAO;
-import model.GameCharacter;
-import model.Title;
 
 /**
  * top.jspで表示されたタイトル名からhome.jspに画面遷移する為のサーブレット

@@ -1,11 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ page import="java.util.List"%>
-<%@ page import="model.Title"%>
 <%@ page import="dao.TitleDAO"%>
-<%@ page import="model.GameCharacter"%>
 <%@ page import="dao.CharacterDAO"%>
 <%@ page import="beans.Beans"%>
+<%@ page import="beans.Title"%>
+<%@ page import="beans.GameCharacter"%>
 
 <%
     GameCharacter gc = (GameCharacter) session.getAttribute("キャラクター情報");

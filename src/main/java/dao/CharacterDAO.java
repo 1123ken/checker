@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import beans.Beans;
-import model.GameCharacter;
+import beans.GameCharacter;
 
 /**
  * キャラクターに関する登録、取得するDAOクラス
@@ -30,34 +30,33 @@ public class CharacterDAO {
 	 * @return タイトルに関連する全キャラクターの一覧
 	 */
 	public List<GameCharacter> getAllCharacters() {
-		// キャラクターリストインスタンスの生成
+		// キャラクターリストのインスタンスを生成
 		List<GameCharacter> characters = new ArrayList<>();
 
-		try (
-			// 接続処理
-			Connection conn = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS)) {
+		// データベース接続
+		try (Connection conn = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS)) {
+			// タイトルに関連する全キャラクターを取得するSQL文
+			String allCharacterSql = "SELECT * FROM character";
 
-			// プレースホルダー
-			// タイトルidからそのタイトルのキャラクターすべてを取得する
-			String allCharacterSql = "SELECT * FROM character WHERE title_id = ?";
-
-			// SQL文を実行するためのPreparedStatementの生成
+			// SQL文を実行するためのPreparedStatement
 			PreparedStatement allCharacterStmt = conn.prepareStatement(allCharacterSql);
-			//実行結果を格納
+			// 実行結果を格納するResultSet
 			ResultSet resultSet = allCharacterStmt.executeQuery();
 
-			// 空白行になるまで繰り返し
+			// 空白行に行くまで繰り返し
 			while (resultSet.next()) {
 				// キャラクターのIDを取得
-				int characterId = resultSet.getInt("characterId");
+				int characterId = resultSet.getInt("character_id");
 				// キャラクター名を取得
-				String characterName = resultSet.getString("characterName");
+				String characterName = resultSet.getString("character_name");
 				// 取得したIDと名前をcharactersに格納
 				characters.add(new GameCharacter(characterId, characterName));
 			}
 		} catch (SQLException e) {
+			// エラーが発生した場合はスタックトレースを表示
 			e.printStackTrace();
 		}
+
 		// 取得したキャラクターリストを返す
 		return characters;
 	}
@@ -72,42 +71,34 @@ public class CharacterDAO {
 		List<GameCharacter> characters = new ArrayList<>();
 
 		try (
-				// 接続処理
-				Connection conn = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS)) {
+			// 接続処理
+			Connection conn = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS)) {
 			// プレースホルダー
 			String sql = "SELECT * FROM character WHERE title_id = ?";
-
-			try (
-					// SQL文を当て込む
-					PreparedStatement pStmt = conn.prepareStatement(sql)) {
-
-				// プレースホルダーにセット
-				pStmt.setInt(1, titleId);
-				try (
-						// 結果セット
-						ResultSet resultSet = pStmt.executeQuery()) {
-
-					// 空白行に登録(add)
-					while (resultSet.next()) {
-						// キャラクターのID
-						int id = resultSet.getInt("character_id");
-						// キャラクターの名前
-						String name = resultSet.getString("character_name");
-						// charactersリストに新しいキャラクターを追加
-						characters.add(new GameCharacter(id, name));
-					}
-				}
+			// SQL文を当て込む
+			PreparedStatement pStmt = conn.prepareStatement(sql);
+			// プレースホルダーにセット
+			pStmt.setInt(1, titleId);
+			// 結果セット
+			ResultSet resultSet = pStmt.executeQuery();
+			// 空白行に行くまで繰り返し
+			while (resultSet.next()) {
+				// キャラクターのID
+				int id = resultSet.getInt("character_id");
+				// キャラクターの名前
+				String name = resultSet.getString("character_name");
+				// charactersリストに新しいキャラクターを追加
+				characters.add(new GameCharacter(id, name));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		//キャラクターリストを返す
 		return characters;
 	}
 
 	/**
 	 * キャラクター名からキャラクターIDを取得するメソッド
-	 * Retrieves the character ID from the character name.
-	 * 
 	 * @param characterName キャラクター名
 	 * @return Character ID
 	 */
@@ -118,43 +109,36 @@ public class CharacterDAO {
 		try {
 			// 接続処理
 			Connection conn = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS);
-			{
-				// プレースホルダー
-				String sql = "SELECT character_id FROM character WHERE character_name = ?";
-				try (
-						// pStmtを作成して
-						PreparedStatement pStmt = conn.prepareStatement(sql)) {
-					// プレースホルダーにセット	
-					pStmt.setString(1, characterName);
-					try (
-							// クエリ結果をresultSetに格納
-							ResultSet resultSet = pStmt.executeQuery()) {
-						// 空白行に取得
-						if (resultSet.next()) {
-							characterId = resultSet.getInt("character_id");
-						}
-					}
-				}
+			// プレースホルダー
+			String sql = "SELECT character_id FROM character WHERE character_name = ?";
+			// pStmtを作成して
+			PreparedStatement pStmt = conn.prepareStatement(sql);
+			// プレースホルダーにセット	
+			pStmt.setString(1, characterName);
+			// クエリ結果をresultSetに格納
+			ResultSet resultSet = pStmt.executeQuery();
+			// 空白行に行くまで繰り返し
+			if (resultSet.next()) {
+				characterId = resultSet.getInt("character_id");
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		//characterIdを返す
 		return characterId;
 	}
 
 	/**
 	 * 自分のキャラクター名と相手のキャラクター名からpointテーブルの情報を取得するメソッド
-	 * Retrieves information from the point table based on the player's and opponent's character names.
-	 * 
 	 * @param myCharacter 自分のキャラクター名
 	 * @param yourCharacter 相手のキャラクター名
-	 * @return List of Beans instances
+	 * @return Beansに格納された値を返す
 	 */
 	public List<Beans> getAllCharacterData(String myCharacter, String yourCharacter) {
 
 		List<Beans> bl = new ArrayList<>();
 
-		// 初期化
+		// メソッドの初期化
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet resultSet = null;
@@ -179,7 +163,7 @@ public class CharacterDAO {
 			// resultSetに検索結果の格納
 			resultSet = pstmt.executeQuery();
 
-			// 空白行に値を入れる(add)
+			// 空白行に行くまで繰り返し
 			while (resultSet.next()) {
 				String title_id = resultSet.getString("title_id");
 				String yourCharacterFromDB = resultSet.getString("your_character_id");

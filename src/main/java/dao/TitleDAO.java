@@ -8,7 +8,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import model.Title;
+import beans.Title;
 
 /**
  * DBから情報を取得、登録を行うDAO
@@ -199,7 +199,7 @@ public class TitleDAO {
             //実行結果を格納
             ResultSet resultSet = searchTitleIdStmt.executeQuery();
 
-            // resultSetの結果が見つかったならtitleIdを返す
+            // 空白行に行くまで繰り返し
             if (resultSet.next()) {
                 // 検索したタイトルIDを取得
                 int titleId = resultSet.getInt("title_id");
@@ -238,7 +238,7 @@ public class TitleDAO {
             PreparedStatement searchAllTitlesStmt = conn.prepareStatement(searchAllTitlesSql);
         	//実行結果を格納
             ResultSet resultSet = searchAllTitlesStmt.executeQuery();) {
-            // 結果セットからタイトル名を取得し、リストに追加
+        	// 空白行に行くまで繰り返し
             while (resultSet.next()) {
                 String titleName = resultSet.getString("title_name");
                 titleList.add(titleName);
@@ -275,14 +275,13 @@ public class TitleDAO {
             // キャラクター名のリストを格納するArrayList
             List<String> characters = new ArrayList<>();
 
-            // 結果セットからキャラクター名を取得し、リストに追加
+            // 空白行に行くまで繰り返し
             while (resultSet.next()) {
                 // 検索結果をcharacterNameに格納
                 String characterName = resultSet.getString("character_name");
                 // キャラクター名をリストに追加
                 characters.add(characterName);
             }
-
             // キャラクターの一覧を返す
             return characters;
         } catch (SQLException e) {
