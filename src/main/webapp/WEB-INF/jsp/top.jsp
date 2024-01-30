@@ -11,7 +11,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>TOP</title>
+<title>ようこそ！</title>
 </head>
 <body>
 	
@@ -41,13 +41,9 @@ if (keyword != null && !keyword.isEmpty()) {
 		if (!titles.isEmpty()) { %>
 	<h2>検索結果</h2>
 	<ul>
-		<%
-		for (Title title : titles) {
-		%>
+		<% for (Title title : titles) { %>
 		<li><a href="<%=request.getContextPath()%>/homeServlet?selectedTitle=<%=title.getTitle()%>"><%=title.getTitle()%></a></li>
-		<%
-		}
-		%>
+		<% } %>
 	</ul>
 	<% } else { %>
 		<p>登録がありません</p>
@@ -83,7 +79,7 @@ if (keyword != null && !keyword.isEmpty()) {
 		<input type="button" value="登録" onclick="register()">
 	</form>
 	
-	<!--ajaxを適用 -->
+	<!--動的に変化させるためにajaxを適用 -->
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	
 	<!-- タイトル検索をするJavascript -->

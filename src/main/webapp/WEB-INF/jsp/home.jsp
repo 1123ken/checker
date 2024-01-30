@@ -38,16 +38,12 @@
             %>
         </select> <br>
         <!-- 対策キャラクター選択用のselectタグ -->
-        <label for="yourCharacter">対策キャラクター選択：</label><br> <select
-            id="yourCharacter" name="yourCharacter">
+        <label for="yourCharacter">対策キャラクター選択：</label><br>
+        <select id="yourCharacter" name="yourCharacter">
             <option value="" disabled selected>キャラクターを選択してください</option>
-            <%
-            for (String chara : characters) {
-            %>
+            <% for (String chara : characters) { %>
             <option value="<%=chara%>"><%=chara%></option>
-            <%
-            }
-            %>
+            <% } %>
         </select> <br>
             <div>
                 キツイ所<br>

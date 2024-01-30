@@ -16,61 +16,57 @@ import dao.TitleDAO;
 import model.GameCharacter;
 import model.Title;
 
+/**
+ * top.jspで表示されたタイトル名からhome.jspに画面遷移する為のサーブレット
+ * @author 馬場 健太朗
+ */
 @WebServlet("/homeServlet")
 public class HomeServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
     	
-    	//top.jspで選択したタイトルを取得
+    	/** top.jspで選択したタイトルを取得 */
         String selectedTitle = request.getParameter("selectedTitle");
 
         if (selectedTitle != null && !selectedTitle.isEmpty()) {
             try {
-            	//セッションの取得
+            	/** セッションの取得 */
                 HttpSession session = request.getSession();
-                
-                //GameCharacterインスタンスの生成
+                /** GameCharacterインスタンスの生成 */
                 GameCharacter gc = new GameCharacter();
-                
-                //セッションに選択したタイトル名を登録
+                /** セッションに選択したタイトル名を登録*/
                 session.setAttribute("キャラクター情報",gc);
-                // titleDAOのインスタンスを生成
+                /** titleDAOのインスタンスを生成 */
                 TitleDAO titleDAO = new TitleDAO();
-                
-                //選択したタイトル名を引数にして検索したタイトル情報をtitlesに登録
+                /** 選択したタイトル名を引数にして検索したタイトル情報をtitlesに登録 */
                 List<Title> titles = titleDAO.searchTitles(selectedTitle);
-                //選択したタイトル名を使ってtitleIdに保存
+                /** 選択したタイトル名を使ってtitleIdに保存 */
                 int titleId = titleDAO.getTitleId(selectedTitle);
-                //titleIdから登録されているキャラクターをcharactersリストに保存
+                /** titleIdから登録されているキャラクターをcharactersリストに保存 */
                 List<String> characters = titleDAO.getCharacters(titleId);
-                
-                //gcに選択したタイトルを保存
+                /** gcに選択したタイトルを保存 */
                 gc.setSelectedTitle(selectedTitle);
-                
-                //選択タイトルをセッションに登録
+                /**選択タイトルをセッションに登録 */
                 session.setAttribute("選択したタイトル名", selectedTitle);
-                // タイトルIDをセッションに登録
+                /**タイトルIDをセッションに登録 */
                 session.setAttribute("タイトルID", titleId);
-                // タイトル情報をセッションに登録
+                /**　タイトル情報をセッションに登録 */
                 session.setAttribute("タイトルリスト", titles);
-                // キャラクターリストをsessionスコープにセット
+                /** キャラクターリストをsessionスコープにセット */
                 session.setAttribute("登録キャラクターリスト", characters);
-                
-                //gcに各項目の値を渡す
+                /**プレースホルダーに値をセット */
                 gc.setSelectedTitle(selectedTitle);
                 gc.setCharacters(characters);
                 gc.setTitleId(titleId);
-                
-                // home.jspへフォワード
+                /** home.jspへフォワード */
                 RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/home.jsp");
                 dispatcher.forward(request, response);
             } catch (SQLException e) {
-            	// エラーハンドリングは必要に応じて追加
                 e.printStackTrace();
             }
         } else {
-            // タイトルが指定されていない場合はトップページへ
+            /** タイトルが指定されていない場合はトップページへ */
         	RequestDispatcher dispatcher = request.getRequestDispatcher("/topServlet");
         	dispatcher.forward(request, response);
         }
