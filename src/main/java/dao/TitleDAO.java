@@ -31,7 +31,6 @@ public class TitleDAO {
     public List<Title> searchTitles(String keyword) throws SQLException {
         // DBに登録しているタイトルのリストのインスタンスを作成
         List<Title> titles = new ArrayList<>();
-
         // プレースホルダー
         // タイトル名の部分一致検索するsql
         String searchTitlesSql = "SELECT * FROM title WHERE title_name LIKE ?";
@@ -83,7 +82,6 @@ public class TitleDAO {
             PreparedStatement searchTitleStmt = conn.prepareStatement(searchTitleSql);
             // タイトルを登録するPreparedStatement
             PreparedStatement insertTitleStmt = conn.prepareStatement(insertTitleSql)) {
-
             // searchTitleでタイトル名を検索するのでプレースホルダーにセット
             searchTitleStmt.setString(1, titleName);
             // 検索結果をresultSetに代入
