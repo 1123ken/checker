@@ -12,9 +12,20 @@ import javax.servlet.http.HttpServletResponse;
 import dao.CharacterDAO;
 import dao.SaveDataDAO;
 
+/**
+ * home.jspの入力フォームで入力したデータをSaveDataDAOに送るサーブレット
+ * @author 馬場 健太朗
+ */
 @WebServlet("/SaveDataServlet")
 public class SaveDataServlet extends HttpServlet {
-
+	
+    /**
+     * doPostメソッドの処理です。
+     * @param request  HTTPサーブレットリクエスト
+     * @param response HTTPサーブレットレスポンス
+     * @throws ServletException サーブレットの一般的な例外
+     * @throws IOException      入出力関連の例外
+     */
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         

@@ -14,10 +14,25 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import beans.Beans;
 import dao.CharacterDAO;
 
+/**
+ * pointテーブル内の各キャラクターの対策等の情報を取得するk￥サ０ブレット
+ * @author 馬場 健太朗
+ *
+ */
 @WebServlet("/checker/GetDataServlet")
 public class GetDataServlet extends HttpServlet {
+	
+	/**
+     * doGETメソッドの処理です。
+     * @param request  HTTPサーブレットリクエスト
+     * @param response HTTPサーブレットレスポンス
+     * @throws ServletException サーブレットの一般的な例外
+     * @throws IOException      入出力関連の例外
+     */
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+    	
+    	request.setCharacterEncoding("UTF-8");
     	
     	//選択キャラクターの取得
         String myCharacter = request.getParameter("myCharacter");

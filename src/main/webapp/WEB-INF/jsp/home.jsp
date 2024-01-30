@@ -89,7 +89,7 @@
 	<!-- 余裕があれば依然追加した対策部分に削除ボタンを作成する -->
 	
     <!-- 前のページに戻る -->
-    <form action="/checker/topServlet">
+    <form action="/checker/TopServlet">
         <input type="submit" value="TOPへ">
     </form>
 

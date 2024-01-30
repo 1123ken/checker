@@ -22,7 +22,14 @@ import dao.TitleDAO;
  */
 @WebServlet("/homeServlet")
 public class HomeServlet extends HttpServlet {
-
+	
+	/**
+     * doGETメソッドの処理です。
+     * @param request  HTTPサーブレットリクエスト
+     * @param response HTTPサーブレットレスポンス
+     * @throws ServletException サーブレットの一般的な例外
+     * @throws IOException      入出力関連の例外
+     */
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
     	

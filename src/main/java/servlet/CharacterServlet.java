@@ -17,8 +17,6 @@ import dao.CharacterDAO;
 /**
  * キャラクター情報を取得するためのサーブレットです。
  * @author 馬場 健太朗
- * @version 1.0
- * @since Servlet 3.0
  */
 @WebServlet("/CharacterServlet")
 public class CharacterServlet extends HttpServlet {

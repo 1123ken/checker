@@ -11,6 +11,8 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="${pageContext.request.contextPath}/js/top.js"></script>
 <title>ようこそ！</title>
 </head>
 <body>
@@ -79,43 +81,5 @@ if (keyword != null && !keyword.isEmpty()) {
 		<input type="button" value="登録" onclick="register()">
 	</form>
 	
-	<!--動的に変化させるためにajaxを適用 -->
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-	
-	<!-- タイトル検索をするJavascript -->
-	<script type="text/javascript">
-		function submitForm() {
-			document.getElementById("searchForm").submit();
-		}
-	</script>
-	<!-- DBにタイトルとキャラクターを登録するjavascript -->
-<script type="text/javascript">
-    function register() {
-        var addTitle = document.getElementById("addTitle").value;
-        var addChara = document.getElementById("addChara").value;
-
-        $.ajax({
-            type: "POST",
-            url: "titleCharaRegiServlet",
-            data: {
-                addTitle: addTitle,
-                addChara: addChara
-            },
-            success: function (response) {
-                if (response.trim() == "success") {
-                    alert("キャラクターを登録しました。");
-                    location.reload();
-                } else if (response.trim() == "duplicateCharacter") {
-                    alert("キャラクターは既に存在します。");
-                } else {
-                    alert("登録に失敗しました。");
-                }
-            },
-            error: function () {
-                alert("通信エラーが発生しました。");
-            }
-        });
-    }
-</script>
 </body>
 </html>

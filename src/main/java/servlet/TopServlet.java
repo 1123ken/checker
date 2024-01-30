@@ -19,8 +19,8 @@ import dao.TitleDAO;
  * @version 1.0
  * @since Servlet 3.0
  */
-@WebServlet("/topServlet")
-public class topServlet extends HttpServlet {
+@WebServlet("/TopServlet")
+public class TopServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
     /**
