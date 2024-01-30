@@ -4,29 +4,24 @@ import java.io.Serializable;
 
 /**
  * ゲームデータを保持するJavaBeansクラスです。
- * Serializable インターフェースを実装しており、オブジェクトの直列化が可能です。
- * 
- * <p>このクラスは、ゲームタイトル名、自分の操作キャラ名、対策したい相手キャラ名、
- * 相手をする上できつい所を示すポイント、全体的なキャラ対策を示すポイントを保持します。</p>
- * 
- * <p>フィールド:
+ * このクラスは、ゲームタイトル名、自分の操作キャラ名、対策したい相手キャラ名、
+ * 相手をする上できつい所を示すポイント、全体的なキャラ対策を示すポイントが入ります。<br>
+ * ・フィールド<br>
  *   <ul>
  *     <li>{@code title} - ゲームのタイトル名</li>
- *     <li>{@code myChara} - 自分の操作キャラ名</li>
+ *     <li>{@code myChara} - 自キャラ</li>
  *     <li>{@code yourChara} - 対策したい相手キャラ名</li>
  *     <li>{@code point} - 相手をする上できつい所を示すポイント</li>
- *     <li>{@code cpoint} - 全体的なキャラ対策を示すポイント</li>
+ *     <li>{@code cpoint} - 全体的な対策</li>
  *   </ul>
- * </p>
- * 
- * <p>コンストラクタ:
+ * <br> 
+ * ・コンストラクタ<br>
  *   <ul>
  *     <li>{@link #Beans()} - デフォルトコンストラクタ</li>
  *     <li>{@link #Beans(String, String, String, String, String)} - パラメータつきコンストラクタ</li>
  *   </ul>
- * </p>
- * 
- * <p>メソッド:
+ * <br>
+ * ・メソッド<br>
  *   <ul>
  *     <li>{@link #getTitle()} - ゲームのタイトル名を取得</li>
  *     <li>{@link #setTitle(String)} - ゲームのタイトル名を設定</li>
@@ -39,20 +34,40 @@ import java.io.Serializable;
  *     <li>{@link #getCpoint()} - 全体的なキャラ対策を示すポイントを取得</li>
  *     <li>{@link #setCpoint(String)} - 全体的なキャラ対策を示すポイントを設定</li>
  *   </ul>
- * </p>
+ * 
  * 
  * @author 馬場 健太朗
  */
 public class Beans implements Serializable {
 
-    // javabeansなのでprivateで使用する変数を宣言
-    private String title;      // ゲームタイトル名
-    private String myChara;    // 自キャラ
-    private String yourChara;  // 相手キャラ
-    private String point;      // ピンポイントな対策
-    private String cpoint;     // 全体的な対策
+    /**
+     * ゲームのタイトル名
+     */
+    private String title;
 
-    /** デフォルトコンストラクタ */
+    /**
+     * 自分の操作キャラ名
+     */
+    private String myChara;
+
+    /**
+     * 対策したい相手キャラ名
+     */
+    private String yourChara;
+
+    /**
+     * 相手をする上できつい所を示すポイント
+     */
+    private String point;
+
+    /**
+     * 全体的なキャラ対策を示すポイント
+     */
+    private String cpoint;
+
+    /**
+     * デフォルトコンストラクタ
+     */
     public Beans() {
     }
 

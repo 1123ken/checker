@@ -65,7 +65,7 @@ public class CharacterDAO {
 	 * 特定のタイトルに紐づくキャラクターのリストを取得
 	 * 
 	 * @param titleId タイトルID
-	 * @return 
+	 * @return タイトルに登録されているキャラクターを返す
 	 */
 	public List<GameCharacter> getAllCharactersForTitle(int titleId) {
 		List<GameCharacter> characters = new ArrayList<>();

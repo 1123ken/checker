@@ -16,8 +16,6 @@ import dao.TitleDAO;
  * TOPページに画面遷移するためのサーブレットです。
  * WEB-INF内にあるため、ここからしか画面遷移できません。
  * @author 馬場 健太朗
- * @version 1.0
- * @since Servlet 3.0
  */
 @WebServlet("/TopServlet")
 public class TopServlet extends HttpServlet {

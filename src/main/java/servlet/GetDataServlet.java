@@ -15,7 +15,7 @@ import beans.Beans;
 import dao.CharacterDAO;
 
 /**
- * pointテーブル内の各キャラクターの対策等の情報を取得するk￥サ０ブレット
+ * pointテーブル内の各キャラクターの対策等の情報を取得するサーブレット
  * @author 馬場 健太朗
  *
  */

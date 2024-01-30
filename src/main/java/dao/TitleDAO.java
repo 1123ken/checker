@@ -181,7 +181,6 @@ public class TitleDAO {
      * タイトル名からタイトルIDを取得するメソッド
      * @param titleName タイトル名
      * @return タイトルID
-     * @throws SQLException タイトルIDの取得に失敗した場合
      */
     public int getTitleId(String titleName) {
         // プレースホルダー

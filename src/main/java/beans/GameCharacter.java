@@ -4,20 +4,18 @@ import java.util.List;
 
 /**
  * ゲームキャラクターに関する情報を保持するJavaBeansクラスです。
- * Serializable インターフェースを実装しており、オブジェクトの直列化が可能です。
- * 
- * <p>このクラスは、タイトルID、選択したタイトル名、登録されているタイトルリスト、
- * タイトルに登録されているキャラクターリスト、個々のキャラクターのID、個々のキャラクター名などを保持します。</p>
- * 
- * <p>コンストラクタ:
+ * このクラスは、タイトルID、選択したタイトル名、登録されているタイトルリスト、
+ * タイトルに登録されているキャラクターリスト、個々のキャラクターのID、個々のキャラクター名などが入ります。<br>
+ * 	
+ * ・コンストラクタ<br>
  *   <ul>
  *     <li>{@link #GameCharacter()} - デフォルトコンストラクタ</li>
  *     <li>{@link #GameCharacter(int, String, String[], String[], int, String)} - パラメータつきコンストラクタ</li>
  *     <li>{@link #GameCharacter(int, String)} - キャラクターを検索するコンストラクタ</li>
  *   </ul>
- * </p>
+ * <br>
  * 
- * <p>メソッド:
+ * ・メソッド<br>
  *   <ul>
  *     <li>{@link #setCharacters(List)} - List&lt;String&gt;からString[]に変換してcharactersをセットする</li>
  *     <li>{@link #getTitleId()} - タイトルIDを取得</li>
@@ -33,7 +31,7 @@ import java.util.List;
  *     <li>{@link #getCharacterName()} - 個々のキャラクター名を取得</li>
  *     <li>{@link #setCharacterName(String)} - 個々のキャラクター名を設定</li>
  *   </ul>
- * </p>
+ * 
  * 
  * @author 馬場 健太朗
  */

@@ -1,1 +1,1 @@
-packageSearchIndex = [{"l":"beans"},{"l":"すべてのパッケージ","u":"allpackages-index.html"}];updateSearchResults();
+packageSearchIndex = [{"l":"beans"},{"l":"dao"},{"l":"servlet"},{"l":"すべてのパッケージ","u":"allpackages-index.html"}];updateSearchResults();

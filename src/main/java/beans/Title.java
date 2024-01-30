@@ -1,19 +1,17 @@
 package beans;
 
 /**
- * タイトル情報を保持するJavaBeansクラスです。
+ * タイトル情報を保持するJavaBeansクラスです。<br>
+ * このクラスは、タイトルID、タイトル名、登録されているタイトルリストなどの情報が入ります。<br>
  * 
- * <p>このクラスは、タイトルID、タイトル名、登録されているタイトルリストなどの情報を保持します。</p>
- * 
- * <p>コンストラクタ:
+ * ・コンストラクタ<br>
  *   <ul>
  *     <li>{@link #Title()} - デフォルトコンストラクタ</li>
  *     <li>{@link #Title(int, String, String[])} - タイトル登録のコンストラクタ</li>
  *     <li>{@link #Title(int, String)} - タイトル検索のコンストラクタ</li>
  *   </ul>
- * </p>
- * 
- * <p>メソッド:
+ * <br>
+ * ・メソッド<br>
  *   <ul>
  *     <li>{@link #toString()} - オブジェクトの文字列表現を取得</li>
  *     <li>{@link #getTitles()} - 登録されているタイトルリストを取得</li>
@@ -23,9 +21,8 @@ package beans;
  *     <li>{@link #getTitle()} - タイトル名を取得</li>
  *     <li>{@link #setTitle(String)} - タイトル名を設定</li>
  *   </ul>
- * </p>
  * 
- * @author 7d03
+ * @author 馬場 健太朗
  */
 public class Title {
     
