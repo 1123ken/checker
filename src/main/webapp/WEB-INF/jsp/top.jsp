@@ -89,27 +89,33 @@ if (keyword != null && !keyword.isEmpty()) {
 		}
 	</script>
 	<!-- DBにタイトルとキャラクターを登録するjavascript -->
-	<script type="text/javascript">
-		function register() {
-			var addTitle = document.getElementById("addTitle").value;
-			var addChara = document.getElementById("addChara").value;
+<script type="text/javascript">
+    function register() {
+        var addTitle = document.getElementById("addTitle").value;
+        var addChara = document.getElementById("addChara").value;
 
-			$.ajax({
-				type : "POST",
-				url : "titleCharaRegiServlet",
-				data : {
-					addTitle : addTitle,
-					addChara : addChara
-				},
-				success : function(response) {
-					alert("登録しました。");
-					location.reload();
-				},
-				error : function() {
-					alert("登録に失敗しました。");
-				}
-			});
-		}
-	</script>
+        $.ajax({
+            type: "POST",
+            url: "titleCharaRegiServlet",
+            data: {
+                addTitle: addTitle,
+                addChara: addChara
+            },
+            success: function (response) {
+                if (response.trim() == "success") {
+                    alert("キャラクターを登録しました。");
+                    location.reload();
+                } else if (response.trim() == "duplicateCharacter") {
+                    alert("キャラクターは既に存在します。");
+                } else {
+                    alert("登録に失敗しました。");
+                }
+            },
+            error: function () {
+                alert("通信エラーが発生しました。");
+            }
+        });
+    }
+</script>
 </body>
 </html>

@@ -12,7 +12,6 @@ import model.Title;
 
 /**
  * DBから情報を取得、登録を行うDAO
- * 
  * @author 馬場 健太朗
  */
 public class TitleDAO {
@@ -43,19 +42,17 @@ public class TitleDAO {
 
             // 入力文字keywordの部分一致検索させる文字をプレースホルダーにセット
             searchTitlesStmt.setString(1, "%" + keyword + "%");
-            // 検索結果をresultSetに格納
+            //実行結果を格納
             ResultSet resultSet = searchTitlesStmt.executeQuery();
 
-            // タイトルが見つかった場合、Titleオブジェクトを作成しリストに追加
+            // 空白行に行くまで繰り返し
             while (resultSet.next()) {
-                // 見つかったタイトルのIDをtitleIdに格納
+            	// タイトルIDを取得
                 int titleId = resultSet.getInt("title_id");
-                // 見つかったタイトル名をtitleNameに格納
+                //タイトル名を取得
                 String titleName = resultSet.getString("title_name");
-                // Titleインスタンスの生成
-                Title title = new Title(titleId, titleName);
-                // リストにTitleインスタンスを追加
-                titles.add(title);
+                // TitleインスタンスにIDとタイトル名を格納
+                titles.add(new Title(titleId, titleName));
             }
         }
         return titles;
@@ -63,7 +60,6 @@ public class TitleDAO {
 
     /**
      * DBにタイトルを登録するメソッド
-     * 
      * @param titleName 登録するタイトルの名前
      * @return 登録が成功した場合は true, 既に同名のタイトルが存在する場合は false
      */
@@ -107,7 +103,6 @@ public class TitleDAO {
 
     /**
      * DBにタイトルIDからキャラクターを登録するメソッド
-     * 
      * @param characterName キャラクターの名前
      * @param titleId       タイトルのID
      * @return 登録が成功した場合は true, 既に同名のキャラクターが存在する場合は false
@@ -155,8 +150,35 @@ public class TitleDAO {
     }
 
     /**
+     * タイトルが既に存在するか確認するメソッド
+     * @param titleName 確認するタイトルの名前
+     * @return タイトルが既に存在する場合は true, それ以外は false
+     */
+    public boolean seachTitle(String titleName) {
+        // タイトル名を検索してタイトルが存在するか確認するSQL文
+        String searchTitleSql = "SELECT title_id FROM title WHERE title_name = ?";
+
+        try (
+            // 接続処理
+            Connection conn = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS);
+            // SQL文を実行するためのPreparedStatementの生成
+            PreparedStatement searchTitleStmt = conn.prepareStatement(searchTitleSql)) {
+
+            // プレースホルダーにタイトル名をセット
+            searchTitleStmt.setString(1, titleName);
+            // 実行結果を格納
+            ResultSet resultSet = searchTitleStmt.executeQuery();
+
+            // タイトルが存在する場合は true を返す
+            return resultSet.next();
+        } catch (SQLException e) {
+            // エラーが発生した場合は実行時例外をスロー
+            throw new RuntimeException("タイトル検索中にエラーが出ました", e);
+        }
+    }
+    
+    /**
      * タイトル名からタイトルIDを取得するメソッド
-     * 
      * @param titleName タイトル名
      * @return タイトルID
      * @throws SQLException タイトルIDの取得に失敗した場合
@@ -174,7 +196,7 @@ public class TitleDAO {
 
             // プレースホルダーにタイトル名をセット
             searchTitleIdStmt.setString(1, titleName);
-            // 実行結果をresultSetに格納
+            //実行結果を格納
             ResultSet resultSet = searchTitleIdStmt.executeQuery();
 
             // resultSetの結果が見つかったならtitleIdを返す
@@ -201,7 +223,6 @@ public class TitleDAO {
 
     /**
      * DBから全タイトルを検索するメソッド
-     * 
      * @return 全タイトルのリスト
      */
     public List<String> getAllTitles() {
@@ -215,7 +236,7 @@ public class TitleDAO {
             Connection conn = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS);
             // SQL文を実行するためのPreparedStatementの生成
             PreparedStatement searchAllTitlesStmt = conn.prepareStatement(searchAllTitlesSql);
-            // SQL実行結果を格納するResultSet
+        	//実行結果を格納
             ResultSet resultSet = searchAllTitlesStmt.executeQuery();) {
             // 結果セットからタイトル名を取得し、リストに追加
             while (resultSet.next()) {
@@ -232,7 +253,6 @@ public class TitleDAO {
 
     /**
      * DBから特定のタイトルに関連するキャラクター一覧を取得するメソッド
-     * 
      * @param titleId タイトルID
      * @return キャラクター名のリスト
      * @throws RuntimeException キャラクター一覧の取得中にエラーが発生した場合
@@ -249,7 +269,7 @@ public class TitleDAO {
 
             // プレースホルダーにタイトルIDをセット
             searchCharactersStmt.setInt(1, titleId);
-            // SQL実行結果を格納するResultSet
+            //実行結果を格納
             ResultSet resultSet = searchCharactersStmt.executeQuery();
 
             // キャラクター名のリストを格納するArrayList

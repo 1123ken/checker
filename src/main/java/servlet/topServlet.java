@@ -24,7 +24,7 @@ public class topServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		
-		/**　文字化けを防ぐためにUTF-8で文字コードを登録 */
+		//文字化けを防ぐためにUTF-8で文字コードを登録
 		request.setCharacterEncoding("UTF-8");
 		
 		/* 登録タイトルを表示するためのDB接続処理 */
