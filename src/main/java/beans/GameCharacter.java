@@ -28,9 +28,10 @@ import java.util.List;
  *     <li>{@link #setCharacterName(String)} - 個々のキャラクター名を設定</li>
  *   </ul>
  * 
- * 
- * @author 馬場 健太朗
  */
+/** 
+* @author 馬場 健太朗
+*/
 public class GameCharacter {
     
     /**

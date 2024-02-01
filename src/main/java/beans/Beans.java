@@ -32,7 +32,8 @@ import java.io.Serializable;
  *     <li>{@link #setCpoint(String)} - 全体的なキャラ対策を示すポイントを設定</li>
  *   </ul>
  * 
- * 
+ */
+ /** 
  * @author 馬場 健太朗
  */
 public class Beans implements Serializable {
