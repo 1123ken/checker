@@ -28,16 +28,10 @@ import java.util.List;
  *     <li>{@link #setCharacterName(String)} - 個々のキャラクター名を設定</li>
  *   </ul>
  * 
+ * @author 馬場 健太朗
  */
-/** 
-* @author 馬場 健太朗
-*/
 public class GameCharacter {
     
-    /**
-     * ゲッターセッターで呼び出すために
-     * privateで各変数を宣言
-     */
     private int titleId;            // タイトルID
     private String selectedTitle;   // 選択したタイトル名
     private String[] Titles;        // 登録されているタイトルList

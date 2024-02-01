@@ -32,36 +32,15 @@ import java.io.Serializable;
  *     <li>{@link #setCpoint(String)} - 全体的なキャラ対策を示すポイントを設定</li>
  *   </ul>
  * 
- */
- /** 
  * @author 馬場 健太朗
  */
 public class Beans implements Serializable {
 
-    /**
-     * ゲームのタイトル名
-     */
-    private String title;
-
-    /**
-     * 自分の操作キャラ名
-     */
-    private String myChara;
-
-    /**
-     * 対策したい相手キャラ名
-     */
-    private String yourChara;
-
-    /**
-     * 相手をする上できつい所を示すポイント
-     */
-    private String point;
-
-    /**
-     * 全体的なキャラ対策を示すポイント
-     */
-    private String cpoint;
+    private String title;		//ゲームのタイトル名
+    private String myChara;		//自分の操作キャラ名
+    private String yourChara;	//対策したい相手キャラ名
+    private String point;		//相手をする上できつい所を示すポイント
+    private String cpoint;		//全体的なキャラ対策を示すポイント
 
     /**
      * デフォルトコンストラクタ

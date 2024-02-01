@@ -18,8 +18,7 @@ package beans;
  *     <li>{@link #getTitle()} - タイトル名を取得</li>
  *     <li>{@link #setTitle(String)} - タイトル名を設定</li>
  *   </ul>
- */
- /** 
+ *
  * @author 馬場 健太朗
  */
 public class Title {
