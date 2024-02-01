@@ -1,0 +1,54 @@
+@charset "UTF-8";
+
+/* ページ全体 */
+body {
+background-color: black;
+}
+
+/* 表示項目 */
+#all{
+	background-color: white;
+	width:60%;
+	height:100%;
+	text-align: center;
+	align-items: center;
+	margin:0 auto;
+	padding-bottom: 110px;
+	padding-top: 10px;
+	border: 5px;
+}
+
+/*リスト表示*/
+li{
+	list-style: none;
+}
+
+/* テーブル全体を中央揃えにする */
+table {
+    margin:auto;
+}
+
+#myCharacter{
+	width:300px;
+}
+
+#yourCharacter{
+	width:300px;
+}
+
+#form1{
+	width:300px;
+}
+
+#form2{
+	width:300px;
+	height:200px;
+}
+#submit{
+	text-align: center;
+	margin-top: 20px;
+}
+
+#point input{
+	margin-top:10px;
+}

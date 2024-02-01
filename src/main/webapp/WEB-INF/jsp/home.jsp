@@ -17,16 +17,18 @@
 <html>
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/home.css">
     <title>登録画面</title>
 </head>
 <body>
+<div id=all>
     <h1><%=gc.getSelectedTitle()%>のページ</h1>
     <br>
     <form action="/checker/SaveDataServlet" method="post">
         <!-- hidenで表示されないがtitleIdの情報を送る処理の一文 -->
         <input type="hidden" name="titleId" value="<%=gc.getTitleId()%>">
         <!-- 自操作キャラクター選択用のselectタグ -->
-        <label for="myCharacter">使用キャラ：</label><br> <select
+        <label for="myCharacter">使用キャラ</label><br> <select
             id="myCharacter" name="myCharacter">
             <option value="" disabled selected>キャラクターを選択してください</option>
             <%
@@ -38,18 +40,18 @@
             %>
         </select> <br>
         <!-- 対策キャラクター選択用のselectタグ -->
-        <label for="yourCharacter">対策キャラクター選択：</label><br>
+        <label for="yourCharacter">対策キャラクター選択</label><br>
         <select id="yourCharacter" name="yourCharacter">
             <option value="" disabled selected>キャラクターを選択してください</option>
             <% for (String chara : characters) { %>
             <option value="<%=chara%>"><%=chara%></option>
             <% } %>
         </select> <br>
-            <div>
+            <div id="point">
                 キツイ所<br>
-                <input type="text" name="point" class="form-control" placeholder="この技がきつい等" required><br>
+                <input type="text" name="point" class="form-control" id="form1" placeholder="この技がきつい等" required><br>
                 対策<br>
-                <textarea name="cpoint" class="form-control" placeholder="全体的な対策" cols="30" rows="10" style="resize: none;" required></textarea>
+                <textarea name="cpoint" class="form-control" id="form2" placeholder="全体的な対策" cols="30" rows="10" style="resize: none;" required></textarea>
                 <br> <input type="submit" value="登録">
             </div>
     </form>
@@ -89,7 +91,8 @@
 	<!-- 余裕があれば依然追加した対策部分に削除ボタンを作成する -->
 	
     <!-- 前のページに戻る -->
-    <form action="/checker/TopServlet">
+</div>
+    <form  id="submit" action="/checker/TopServlet">
         <input type="submit" value="TOPへ">
     </form>
 
@@ -141,6 +144,5 @@
             }
         });
     </script>
-
 </body>
 </html>

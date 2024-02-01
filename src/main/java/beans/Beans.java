@@ -35,11 +35,30 @@ import java.io.Serializable;
  * @author 馬場 健太朗
  */
 public class Beans implements Serializable {
-
+	
+	/**
+	 * ゲームのタイトル名
+	 */
     private String title;		//ゲームのタイトル名
+    
+    /**
+     * 自分の操作キャラクター名
+     */
     private String myChara;		//自分の操作キャラ名
+    
+    /**
+     * 対策したい相手のキャラクター名
+     */
     private String yourChara;	//対策したい相手キャラ名
+    
+    /**
+     * 相手をする上でキツイところ
+     */
     private String point;		//相手をする上できつい所を示すポイント
+    
+    /**
+     * 全体的な対策を書くところ
+     */
     private String cpoint;		//全体的なキャラ対策を示すポイント
 
     /**
