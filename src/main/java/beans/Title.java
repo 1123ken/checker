@@ -23,9 +23,18 @@ package beans;
  */
 public class Title {
     
-    private int titleId;        // タイトルID
-    private String title;       // タイトル名
-    private String[] titles;    // 登録されているタイトルリスト
+	/**
+	 * タイトルID
+	 */
+    private int titleId;
+    /**
+     * タイトル名
+     */
+    private String title;
+    /**
+     * タイトルリスト
+     */
+    private String[] titles;
     
     /**
      * デフォルトコンストラクタ

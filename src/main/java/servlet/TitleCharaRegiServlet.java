@@ -15,6 +15,9 @@ import dao.TitleDAO;
  */
 @WebServlet("/TitleCharaRegiServlet")
 public class TitleCharaRegiServlet extends HttpServlet {
+	/**
+	 * シリアライズされたオブジェクトのバージョン識別子
+	 */
     private static final long serialVersionUID = 1L;
     /**
      * doPostメソッドの処理です。

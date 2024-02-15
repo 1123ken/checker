@@ -19,6 +19,9 @@ import dao.TitleDAO;
  */
 @WebServlet("/TopServlet")
 public class TopServlet extends HttpServlet {
+	/**
+	 * シリアライズされたオブジェクトのバージョン識別子
+	 */
     private static final long serialVersionUID = 1L;
 
     /**

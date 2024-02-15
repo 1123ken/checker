@@ -31,13 +31,34 @@ import java.util.List;
  * @author 馬場 健太朗
  */
 public class GameCharacter {
+	
+	/**
+	 * タイトルID
+	 */
+    private int titleId; 
+
+    /**
+     * タイトル名
+     */
+    private String selectedTitle;
+    /**
+     * タイトルリスト
+     */
+    private String[] Titles;
     
-    private int titleId;            // タイトルID
-    private String selectedTitle;   // 選択したタイトル名
-    private String[] Titles;        // 登録されているタイトルList
-    private String[] characters;    // タイトルに登録されているキャラクターList
-    private int characterId;        // 個々のキャラクターに登録されているid
-    private String characterName;   // 個々のキャラクター名
+    /**
+     * キャラクターリスト
+     */
+    private String[] characters;
+    
+    /**
+     * キャラクターに登録されているID
+     */
+    private int characterId;
+    /**
+     * キャラクター名
+     */
+    private String characterName;
 
     /**
      * デフォルトコンストラクタ

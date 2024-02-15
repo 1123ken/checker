@@ -18,11 +18,25 @@ import beans.GameCharacter;
 public class CharacterDAO {
 
 	// PostgreSQLに接続するための情報
+	
+	/**
+	 * postgressのパス
+	 */
 	private final static String JDBC_URL = "jdbc:postgresql://localhost:5432/checker";
+	
+	/**
+	 * ユーザー名
+	 */
 	private final static String DB_USER = "postgres";
+	
+	/**
+	 * パスワード
+	 */
 	private final static String DB_PASS = "admin";
 
-	// Connectionの宣言、初期化
+	/**
+	 * Connectionの宣言、初期化
+	 */
 	Connection conn = null;
 
 	/**
